@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    {% block title %}
+    <title>Air Temperature App</title>
+    {% endblock %}
+</head>
+
+<body>
+    <header>
+        <h1>Air Temperature App</h1>
+        <nav>
+            {% if not request.path == '/accounts/login/' %}
+            {% if user.is_authenticated %}
+            <p>Welcome, {{ user.username }}! <a href="{% url 'logout' %}">Logout</a></p>
+            {% else %}
+            <p><a href="{% url 'login' %}">Login</a></p>
+            {% endif %}
+            {% endif %}
+        </nav>
+    </header>
+
+    {% block sidebar %}
+    <!-- Insert default navigation or sidebar content here -->
+    {% endblock %}
+
+    <main>
+        {% block content %}
+        <!-- Default content text (typically empty) -->
+        {% endblock %}
+    </main>
+</body>
+
+</html>
