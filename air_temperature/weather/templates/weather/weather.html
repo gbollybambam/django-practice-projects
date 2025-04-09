@@ -1,0 +1,15 @@
+{% block content %}
+    <h1>Weather App</h1>
+    <form method="'GET" action="{% url 'weather_api' %}">
+        {{ form.as_p }}
+        <button type="submit">Get Weather</button>
+    </form>
+    {% if weather %}
+        <h2>Weather in {{weather.city}}</h2>
+        <img src="http://openweathermap.org/img/wn/{{ weather.icon }}.png" alt="Weather Icon">
+        <p>Temperature: {{ weather.temperature }}</p>
+        <p>Description: {{ weather.description }}</p>
+    {% elif error %}
+        <p>{{error}}</p>
+    {% endif %}
+{% endblock %}
