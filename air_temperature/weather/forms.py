@@ -23,7 +23,7 @@ class WeatherForm(forms.Form):
         label='longitude',
         validators=[MinValueValidator(-180), MaxValueValidator(180)]
     )
-
+    
     zip_code = forms.CharField(
         required=False,
         max_length=20,

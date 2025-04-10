@@ -11,21 +11,6 @@ base_url = 'https://api.openweathermap.org/data/2.5/weather'
 def index(request):
     return HttpResponse('it is hot today :(')
 
-def validate_lat_lon(lat, lon):
-    try:
-        lat = float(lat)
-        lon = float(lon)
-        if not ( -90 <= lat <= 90) or not ( -180 <= lon <= 180):
-            return False
-        return True
-    except(ValueError, TypeError):
-        return False
-
-def valiidate_zip_code(zip_code):
-    if ',' in zip_code and len(zip_code.split(',')) == 2:
-        return True
-    return False
-
 def weather_api(request):
     if request.method == 'GET':
         form = WeatherForm(request.GET or None)
@@ -35,14 +20,6 @@ def weather_api(request):
             lat = request.GET.get('lat')
             lon = request.GET.get('lon')
             zip_code = request.GET.get('zip')
-
-            # validate inputs
-            if lat and lon:
-                if not validate_lat_lon(lat, lon):
-                    return JsonResponse({'error': 'Invlaid latitude or longitude'},status=400)
-            elif zip_code:
-                if not valiidate_zip_code(zip_code):
-                    return JsonResponse({'error': 'Invalid ZIP code format. correct format Ex. "12345,us".'}, status=400)
 
             # Construct the API based on the input type
             if city:
@@ -74,3 +51,9 @@ def weather_api(request):
     else:
         form = WeatherForm()
         return render(request, 'weather/weather.html', {'form': form})
+
+
+# implementing leaflet js i==n=to my app
+# cdn link to css and javascript
+# copy link into html head
+# 
