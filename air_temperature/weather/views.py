@@ -12,6 +12,9 @@ def index(request):
     return HttpResponse('it is hot today :(')
 
 def weather_api(request):
+    context = {
+        'OPENCAGE_API_KEY': settings.OPENCAGE_API_KEY,
+    }
     if request.method == 'GET':
         form = WeatherForm(request.GET or None)
         if form.is_valid():
@@ -35,7 +38,11 @@ def weather_api(request):
                 response.raise_for_status()
             except requests.exceptions.RequestException as e:
                 logger.error(f'API request failed: {e}')
-                return render(request, 'weather/weather.html', {'form': form, 'error': 'Failed to fetch weather data, Please try again later'})
+                return render(request, 'weather/weather.html', {
+                    'form': form,
+                    'error': 'Failed to fetch weather data, Please try again later',
+                    'OPENCAGE_API_KEY': settings.OPENCAGE_API_KEY
+                })
 
             weather_data = response.json()
             # extract relevant data
@@ -45,12 +52,22 @@ def weather_api(request):
                 'description': weather_data.get('weather', [{}])[0].get('description'),
                 'icon': weather_data.get('weather', [{}])[0].get('icon'),
             }
-            return render(request, 'weather/weather.html', {'form': form, 'weather': weather})
+            return render(request, 'weather/weather.html', {
+                'form': form,
+                'weather': weather,
+                'OPENCAGE_API_KEY': settings.OPENCAGE_API_KEY
+            })
         else:
-            return render(request, 'weather/weather.html', {'form': form})
+            return render(request, 'weather/weather.html', {
+                'form': form,
+                'OPENCAGE_API_KEY': settings.OPENCAGE_API_KEY          
+            })
     else:
         form = WeatherForm()
-        return render(request, 'weather/weather.html', {'form': form})
+        return render(request, 'weather/weather.html', {
+            'form': form,
+            'OPENCAGE_API_KEY': settings.OPENCAGE_API_KEY
+        })
 
 
 # implementing leaflet js i==n=to my app
