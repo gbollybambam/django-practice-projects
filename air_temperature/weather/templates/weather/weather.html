@@ -16,12 +16,16 @@
 {% block content %}
     <div id="map"></div>
     <h1>Weather App</h1>
-    <form method="'GET" action="{% url 'weather_api' %}">
+    <form method="'GET" action="{% url 'weather_dashboard' %}">
         {{ form.as_p }}
         <button type="submit">Get Weather</button>
     </form>
     {% if weather %}
-        <h2>Weather in {{weather.city}}</h2>
+        {% if weather.city %}
+            <h2>Weather in {{weather.city}}</h2>
+        {% else %}
+            <h2>Weather at Coordinate: {{ weather.lat|floatformat:2 }}, {{ weather.lon|floatformat:2 }}</h2>
+        {% endif %}
         <img src="http://openweathermap.org/img/wn/{{ weather.icon }}.png" alt="Weather Icon">
         <p>Temperature: {{ weather.temperature }}</p>
         <p>Description: {{ weather.description }}</p>

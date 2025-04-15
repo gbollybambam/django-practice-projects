@@ -18,6 +18,8 @@
 <form method="post" action="{% url 'login' %}">
     {% csrf_token %}
     {{ form.as_p }}
+    <input type="hidden" name="next" value="{{ next }}">
     <button type="submit">Login</button>
 </form>
+<p>Dont have an acount? <a href="{% url 'register' %}">Register here</a></p>
 {% endblock %}

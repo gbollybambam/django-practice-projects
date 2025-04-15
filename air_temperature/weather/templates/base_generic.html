@@ -15,10 +15,16 @@
         <h1>Air Temperature App</h1>
         <nav>
             {% if not request.path == '/accounts/login/' %}
-            {% if user.is_authenticated %}
-            <p>Welcome, {{ user.username }}! <a href="{% url 'logout' %}">Logout</a></p>
+                {% if user.is_authenticated %}
+                    <p>Welcome, {{ user.username }}!</p>
+                    <form method="POST" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit">Logout</button>
+                    </form>
             {% else %}
-            <p><a href="{% url 'login' %}">Login</a></p>
+            <p>
+                <a href="{% url 'login' %}"></a>
+            </p>
             {% endif %}
             {% endif %}
         </nav>

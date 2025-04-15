@@ -24,8 +24,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch(url);
             const data = await response.json();
 
+            document.getElementById('id_city').value = '';
+            document.getElementById('id_lat').value = '';
+            document.getElementById('id_lon').value = '';
+
             if (data.results && data.results.length > 0) {
                 const location = data.results[0].formatted;
+                console.log(location)
+                console.log(data)
+                
+                document.getElementById('id_lat').value = lat;
+                document.getElementById('id_lon').value = lon;
 
                 map.setView([lat, lon], 13);
                 L.marker([lat, lon]).addTo(map).bindPopup(`Location: ${location}`).openPopup();

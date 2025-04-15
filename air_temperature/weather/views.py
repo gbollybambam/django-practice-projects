@@ -1,18 +1,17 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from .forms import WeatherForm
+from .forms import WeatherForm, CustomUserCreationForm
 from django.conf import settings
-from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
 import requests
 import logging
 
 logger = logging.getLogger(__name__)
 base_url = 'https://api.openweathermap.org/data/2.5/weather'
-# Create your views here.
-def index(request):
-    return HttpResponse('it is hot today :(')
 
+# Create your views here.
+@login_required
 def weather_api(request):
     if request.method == 'GET':
         form = WeatherForm(request.GET or None)
@@ -49,6 +48,8 @@ def weather_api(request):
                 'temperature': weather_data.get('main', {}).get('temp'),
                 'description': weather_data.get('weather', [{}])[0].get('description'),
                 'icon': weather_data.get('weather', [{}])[0].get('icon'),
+                'lat': lat,
+                'lon': lon,
             }
             return render(request, 'weather/weather.html', {
                 'form': form,
@@ -64,7 +65,7 @@ def weather_api(request):
             'form': form,
         })
 
-
+@login_required
 def get_location(request):
     lat = request.GET.get('lat')
     lon = request.GET.get('lon')
@@ -84,7 +85,12 @@ def get_location(request):
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return 
+            return redirect('login')
+        else:
+            return render(request, 'registration/register.html', {'form': form})
+    else:
+        form = CustomUserCreationForm()
+        return render(request, 'registration/register.html', {'form': form})

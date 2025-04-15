@@ -1,6 +1,8 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.contrib.auth.forms import UserCreationForm
+from .models import CustomUser
 
 class WeatherForm(forms.Form):
     city = forms.CharField(
@@ -44,3 +46,12 @@ class WeatherForm(forms.Form):
             raise forms.ValidationError(_("Please provide at least one input: lat/lon, or ZIP code."))
 
         return cleaned_data
+    
+class CustomUserCreationForm(UserCreationForm):
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'password1', 'password2')
+
+    def _init_(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].help_text = 'Required. 150 characters or fewer. Letters, digit and @/.//_ only'

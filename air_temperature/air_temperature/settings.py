@@ -117,10 +117,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
+STATIC_URL = '/static/'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -130,7 +128,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #  new settings change
 AUTH_USER_MODEL = 'weather.CustomUser'
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/' 
+LOGIN_REDIRECT_URL = '/weather/'
+LOGOUT_REDIRECT_URL = '/accounts/logout/' 
 OPENWEATHER_API_KEY = config('OPENWEATHER_API_KEY')
 OPENCAGE_API_KEY = config('OPENCAGE_API_KEY')
