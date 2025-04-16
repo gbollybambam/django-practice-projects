@@ -1,44 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="Air temperature app" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- <link rel="icon" href="img/favicon.png" /> -->
+        <!-- <link rel="apple-touch-icon" href="img/apple-touch-icon.png" /> -->
+        <!-- <link rel="manifest" href="manifest.webmanifest" /> -->
+         {% block leaf %}
+         {% endblock %}
 
-<head>
-    {% block title %}
-    <title>Air Temperature App</title>
-    {% endblock %}
-
-    {% block leaf %}
-    {% endblock %}
-</head>
+        {% block title %}
+        <title>Air Temperature App</title>
+        {% endblock %}
+    </head>
 
 <body>
     <header>
-        <h1>Air Temperature App</h1>
         <nav>
-            {% if not request.path == '/accounts/login/' %}
-                {% if user.is_authenticated %}
-                    <p>Welcome, {{ user.username }}!</p>
-                    <form method="POST" action="{% url 'logout' %}">
-                        {% csrf_token %}
-                        <button type="submit">Logout</button>
-                    </form>
-            {% else %}
-            <p>
-                <a href="{% url 'login' %}"></a>
-            </p>
-            {% endif %}
-            {% endif %}
+            <ul>
+                {% block list_items %}
+                {% endblock %}
+            </ul>
         </nav>
     </header>
 
-    {% block sidebar %}
-    <!-- Insert default navigation or sidebar content here -->
-    {% endblock %}
-
     <main>
         {% block content %}
-        <!-- Default content text (typically empty) -->
         {% endblock %}
     </main>
+    <footer>
+        {% block footer %}
+        {% endblock %}
+    </footer>
 </body>
-
 </html>

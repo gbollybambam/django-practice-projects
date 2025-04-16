@@ -2,34 +2,48 @@
 {% load static %}
 
 {% block leaf %}
- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-     crossorigin=""/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <style>
-        #map { height: 400px; }
-    </style>
-    <script src="{% static 'js/map.js' %}"></script>
+<style>
+    #map {
+        height: 400px;
+    }
+</style>
+<script src="{% static 'js/map.js' %}"></script>
 {% endblock %}
 
 {% block content %}
+<section>
     <div id="map"></div>
-    <h1>Weather App</h1>
-    <form method="'GET" action="{% url 'weather_dashboard' %}">
-        {{ form.as_p }}
-        <button type="submit">Get Weather</button>
-    </form>
+    <div>
+        <form method="POST" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+    </div
+    <div>
+        <form method="GET" action="{% url 'weather_dashboard' %}">
+            {{ form.as_p }}
+            <button type="submit">Get Weather</button>
+        </form>
+    </div>
     {% if weather %}
-        {% if weather.city %}
-            <h2>Weather in {{weather.city}}</h2>
-        {% else %}
-            <h2>Weather at Coordinate: {{ weather.lat|floatformat:2 }}, {{ weather.lon|floatformat:2 }}</h2>
-        {% endif %}
-        <img src="http://openweathermap.org/img/wn/{{ weather.icon }}.png" alt="Weather Icon">
-        <p>Temperature: {{ weather.temperature }}</p>
-        <p>Description: {{ weather.description }}</p>
+        <div>
+            {% if weather.city %}
+                <h2>Weather in {{weather.city}}</h2>
+            {% else %}
+                <h2>Weather at Coordinate: {{ weather.lat|floatformat:2 }}, {{ weather.lon|floatformat:2 }}</h2>
+            {% endif %}
+            <img src="http://openweathermap.org/img/wn/{{ weather.icon }}.png" alt="Weather Icon">
+            <p>Temperature: {{ weather.temperature }}</p>
+            <p>Description: {{ weather.description }}</p>
+        </div>
     {% elif error %}
-        <p>{{error}}</p>
+        <div>
+            <p>{{error}}</p>
+        </div>
     {% endif %}
+</section>
 {% endblock %}

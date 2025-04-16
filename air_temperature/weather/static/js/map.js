@@ -6,16 +6,30 @@ document.addEventListener('DOMContentLoaded', () => {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
 
-    navigator.geolocation.getCurrentPosition((position) => {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
+    let geolocationSet = false;
 
-        map.setView([lat, lon, 13]);
-        L.marker([lat, lon]).addTo(map).bindPopup("You are here").openPopup();
-    }, (error) => {
-        console.error('Error getting user location:', error)
-        alert('Unable to retrieve your location')
-    });
+    function getUSerLocation() {
+        navigator.geolocation.getCurrentPosition((position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+    
+            map.setView([lat, lon, 13]);
+            L.marker([lat, lon]).addTo(map).bindPopup("You are here").openPopup();
+        }, (error) => {
+            console.error('Error getting user location:', error)
+            alert('Unable to retrieve your location')
+        });
+    };
+
+    if (!geolocationSet) {
+        getUSerLocation();
+        geolocationSet = true;
+    }
+
+    function centreMap(lat, lon, loation) {
+        map.setView([lat, lon], 13);
+        L.marker([lat, lon]).adTo(map).bindPopup(`location: ${location}`).openPopup();
+    }
 
     const fetchLocation = async function (lat, lon) {
         const url = `/weather/get_location/?lat=${lat}&lon=${lon}`;
@@ -36,8 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('id_lat').value = lat;
                 document.getElementById('id_lon').value = lon;
 
-                map.setView([lat, lon], 13);
-                L.marker([lat, lon]).addTo(map).bindPopup(`Location: ${location}`).openPopup();
+                centreMap(lat, lon, location);
             } else {
                 alert('No location data found');
             }
