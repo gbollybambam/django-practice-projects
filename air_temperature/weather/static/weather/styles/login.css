@@ -1,0 +1,33 @@
+html,
+body {
+    background: #FAF9F6;
+}
+
+.cover-img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+
+.login-section {
+    padding: 2rem;
+}p
+
+  
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 6.4rem;
+
+    max-width: 85rem;
+    margin: 0 auto;
+
+
+    /* padding: 3.2rem; */
+
+    background: #fff;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+}
