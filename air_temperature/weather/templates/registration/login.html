@@ -13,42 +13,38 @@
         <div class="cover">
             <div class="cover-content">
                 <img src="{% static 'weather/images/weather.jpg' %}" alt="blue sky with clouds" class="cover-img" />
-                <!-- <div class="text">
-                    <span class="text-1">Welcome!</span>
-                </div> -->
+                <div class="text">
+                    <span class="text-1 dm-sans-bold">Weather Made Simple</span>
+                </div>
             </div>
         </div>
 
         <div class="forms">
             <div class="form-content">
-                {% if form.errors %}
-                <div>
-                    <p>Your username and password didn't match. Please try again.</p>
-                </div>
-                {% endif %}
-
-                {% if next %}
-                <div>
-                    {% if user.is_authenticated %}
-                    <p>Your account doesn't have access to this page. To proceed,
-                        please login with an account that has access.</p>
-                    {% else %}
-                    <p>Please login to see this page.</p>
-                    {% endif %}
-                </div>
-                {% endif %}
                 <div class="login-form">
                     <div class="title">Login</div>
-                    <span class="title-text"> Please login to your acount.</span>
+                    <span class="title-text">Please login to your account.</span>
                     <form method="post" action="{% url 'login' %}">
                         {% csrf_token %}
-                        {{ form.as_p }}
+                        {{ form.non_field_errors }}
                         <input type="hidden" name="next" value="{{ next }}">
-                        <button type="submit">Login</button>
-                </form>
-                </div>
 
-                <p>Dont have an acount? <a href="{% url 'register' %}">Register here</a></p>
+                        <div class="form-group">
+                            {{ form.username.label_tag }}
+                            {{ form.username }}
+                            {{ form.username.errors }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.password.label_tag }}
+                            {{ form.password }}
+                            {{ form.password.errors }}
+                        </div>
+
+                        <button type="submit">Login</button>
+                    </form>
+                </div>
+                <p class="new-user">New User? <a href="{% url 'register' %}">Sign Up</a></p>
             </div>
         </div>
     </div>
@@ -111,95 +107,7 @@ align-items: center;
     </div>
 </body>  -->
 <!-- @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
-* {
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-font-family: "Poppins", sans-serif;
-}
-body {
-min-height: 100vh;
-display: flex;
-align-items: center;
-justify-content: center;
-background: #7d2ae8;
-padding: 30px;
-}
-.container {
-position: relative;
-max-width: 850px;
-width: 100%;
-background: #fff;
-padding: 40px 30px;
-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-perspective: 2700px;
-}
-.container .cover {
-position: absolute;
-top: 0;
-left: 50%;
-height: 100%;
-width: 50%;
-z-index: 98;
-transition: all 1s ease;
-transform-origin: left;
-transform-style: preserve-3d;
-backface-visibility: hidden;
-}
-.container #flip:checked ~ .cover {
-transform: rotateY(-180deg);
-}
-.container #flip:checked ~ .forms .login-form {
-pointer-events: none;
-}
-.container .cover .front,
-.container .cover .back {
-position: absolute;
-top: 0;
-left: 0;
-height: 100%;
-width: 100%;
-}
-.cover .back {
-transform: rotateY(180deg);
-}
-.container .cover img {
-position: absolute;
-height: 100%;
-width: 100%;
-object-fit: cover;
-z-index: 10;
-}
-.container .cover .text {
-position: absolute;
-z-index: 10;
-height: 100%;
-width: 100%;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-}
-.container .cover .text::before {
-content: '';
-position: absolute;
-height: 100%;
-width: 100%;
-opacity: 0.5;
-background: #7d2ae8;
-}
-.cover .text .text-1,
-.cover .text .text-2 {
-z-index: 20;
-font-size: 26px;
-font-weight: 600;
-color: #fff;
-text-align: center;
-}
-.cover .text .text-2 {
-font-size: 15px;
-font-weight: 500;
-}
+
 .container .forms {
 height: 100%;
 width: 100%;

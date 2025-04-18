@@ -66,10 +66,13 @@ html {
 }
 
 body {
-    font-family: sans-serif;
     /* line-height: 1; */
-    font-weight: 400;
     color: #555;
+    font-family: 'DM Sans', sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    /* Default weight */
+    font-style: normal;
 
     overflow-x: hidden;
 }
