@@ -51,7 +51,3 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = CustomUser
         fields = ('username', 'password1', 'password2')
-
-    def _init_(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['username'].help_text = 'Required. 150 characters or fewer. Letters, digit and @/.//_ only'

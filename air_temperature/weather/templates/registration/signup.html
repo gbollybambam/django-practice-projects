@@ -1,0 +1,39 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block leaf %}
+<link rel="stylesheet" href="{% static 'weather/styles/signup.css' %}" />
+{% endblock %}
+
+{% block content %}
+<section class="signup-section">
+    <div class="container">
+        <h2>Signup</h2>
+        <div class="form-content">
+            <form class="form" method="POST">
+                {% csrf_token %}
+                <div>
+                    {{ form.username.label_tag }}
+                    {{ form.username }}
+                    {{ form.username.errors }}
+                    {# omit help text #}
+                </div>
+                <div>
+                    {{ form.password1.label_tag }}
+                    {{ form.password1 }}
+                    {{ form.password1.errors }}
+                    {# omit help text #}
+                </div>
+                <div>
+                    {{ form.password2.label_tag }}
+                    {{ form.password2 }}
+                    {{ form.password2.errors }}
+                    {# omit help text #}
+                </div>
+                <button class="btn" type="submit">Sign up</button>
+            </form>
+        </div>
+        <p class="text">Already have an account ? <a href="{% url 'login' %}">Login here</a>.</p>
+    </div>
+</section>
+{% endblock %}

@@ -5,30 +5,6 @@
     background-color: #f9f9f9;
 }
 
-.cover-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-.cover-content {
-    width: 100%;
-    height: 100%;
-    /* Fill container height */
-}
-
-.cover-content::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(70, 130, 180, 0.3);
-    pointer-events: none;
-}
-
 .container {
     position: absolute;
     top: 50%;
@@ -42,6 +18,31 @@
     background-color: #ffffff;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
+
+.cover-content {
+    width: 100%;
+    height: 100%;
+    /* Fill container height */
+}
+
+.cover-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.cover-content::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(70, 130, 180, 0.3);
+    pointer-events: none;
+}
+
 
 .cover-content {
     position: relative;
@@ -90,7 +91,7 @@
     font-size: 2rem;
     padding-top: 2rem;
     padding-bottom: 1rem;
-    color: #333;
+    color: #4a90e2;
 }
 
 .login-form .title-text {
@@ -108,6 +109,7 @@
 
 .login-form form label {
     display: block;
+    font-family: "DM Sans", sans-serif;
     padding-top: 2rem;
     padding-bottom: 1rem;
 }
@@ -138,7 +140,7 @@
     font-size: 1rem;
     font-family: "DM sans", sans-serif;
     cursor: pointer;
-        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
 }
 

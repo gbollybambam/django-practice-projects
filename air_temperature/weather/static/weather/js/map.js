@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let geolocationSet = false;
 
-    function getUSerLocation() {
+    function getUserLocation() {
         navigator.geolocation.getCurrentPosition((position) => {
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
@@ -22,13 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     if (!geolocationSet) {
-        getUSerLocation();
+        getUserLocation();
         geolocationSet = true;
     }
 
-    function centreMap(lat, lon, loation) {
+    function centreMap(lat, lon, location) {
         map.setView([lat, lon], 13);
-        L.marker([lat, lon]).adTo(map).bindPopup(`location: ${location}`).openPopup();
+        L.marker([lat, lon]).addTo(map).bindPopup(`location: ${location}`).openPopup();
     }
 
     const fetchLocation = async function (lat, lon) {

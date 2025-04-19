@@ -83,14 +83,14 @@ def get_location(request):
     except requests.exceptions.RequestException as e:
         return JsonResponse({'error': 'Failed to fetch location data'}, status=500)
 
-def register(request):
+def signup(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('login')
         else:
-            return render(request, 'registration/register.html', {'form': form})
+            return render(request, 'registration/signup.html', {'form': form})
     else:
         form = CustomUserCreationForm()
-        return render(request, 'registration/register.html', {'form': form})
+        return render(request, 'registration/signup.html', {'form': form})
