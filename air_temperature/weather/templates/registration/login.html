@@ -1,0 +1,55 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block leaf %}
+<link rel="stylesheet" href="{% static 'weather/styles/login.css' %}" />
+<script src="{% static 'weather/js/login.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+<section class="login-section">
+    <div class="container">
+        <div class="cover">
+            <div class="cover-content">
+                <img src="{% static 'weather/images/weather.jpg' %}" alt="blue sky with clouds" class="cover-img" />
+                <div class="text">
+                    <span class="text-1 dm-sans-bold">Weather Made Simple</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="forms">
+            <div class="form-content">
+                <div class="login-form">
+                    <div class="title">Login</div>
+                    <span class="title-text">Please login to your account.</span>
+                    <form method="post" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+                        <input type="hidden" name="next" value="{{ next }}">
+
+                        <div class="form-group">
+                            {{ form.username.label_tag }}
+                            {{ form.username }}
+                            {{ form.username.errors }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.password.label_tag }}
+                            {{ form.password }}
+                            {{ form.password.errors }}
+                        </div>
+
+                        <button class="login-button" type="submit">
+                            <span class="button-text">Login</span>
+                            <span class="spinner" style="display: none;"></span>
+                        </button>
+                    </form>
+                </div>
+                <p class="new-user">New User? <a href="{% url 'signup' %}">Sign Up</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

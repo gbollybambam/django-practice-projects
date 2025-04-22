@@ -1,0 +1,69 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block leaf %}
+<link rel="stylesheet" href="{% static 'weather/styles/weather.css' %}"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="{% static 'weather/js/map.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<section class="weather-section">
+    <div class="left-content">
+        <section class="weather-form-section">
+            <h2 class="title">Air Temperature</h2>
+            <span class="title-text">Search for air temperature.</span>
+            <form method="GET" action="{% url 'weather_dashboard' %}">
+                {{ form.as_p }}
+                <button class="get-btn" type="submit">Get Weather</button>
+            </form>
+        </section>
+
+        {% if weather %}
+            <section class="weather-display">
+
+                {% if weather.city %}
+                <div>
+                    <h2>Weather in {{weather.city}}</h2>
+                    <p>Temperature: {{ weather.temperature }}</p>
+                    <p>Description: {{ weather.description }}</p>
+                </div>
+                {% else %}
+                <div>
+                    <h2>Weather at: {{ weather.lat|floatformat:2 }}, {{ weather.lon|floatformat:2 }}</h2>
+                    <p>Temperature: {{ weather.temperature }}</p>
+                    <p>Description: {{ weather.description }}</p>
+                </div>
+                {% endif %}
+                
+                <img src="http://openweathermap.org/img/wn/{{ weather.icon }}.png" alt="Weather Icon">
+                <span class="spinner" style="display: none;"></span>
+            </section>
+        {% elif error %}
+            <section class="weather-error">
+                <p>{{error}}</p>
+            </section>
+        {% endif %}
+
+        <section class="logout-section">
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                    <button type="submit" class="logout-button">
+                        Do you want to log <span class="blue-text">Logout</span>?
+                    </button>
+            </form>
+        </section>
+    </div>
+
+    <div class="right-content">
+        <div id="map"></div>
+        <span class="spinner" style="display: none;"></span>
+    </div>
+
+</section>
+{% endblock %}
+
+

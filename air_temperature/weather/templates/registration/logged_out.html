@@ -1,0 +1,13 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block leaf %}
+<link rel="stylesheet" href="{% static 'weather/styles/logged_out.css' %}" />}
+{% endblock %}
+
+{% block content %}
+<div class="logged-out-message">
+    <p class="first">Logged out!</p>
+    <p>Thank you for visiting. you can <a href="{% url 'login'%}">Click here to login again.</a> or <a href="{% url 'signup' %}">register a new account</a></p>
+</div>
+{% endblock %}
