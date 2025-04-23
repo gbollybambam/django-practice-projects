@@ -1,0 +1,13 @@
+# Ignore .env and database files
+*.env
+*.sqlite3
+
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+
+# VS Code settings
+.vscode/
+
+# System files
+.DS_Store
