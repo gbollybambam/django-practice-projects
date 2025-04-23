@@ -1,15 +1,13 @@
-# Ignore Python cache files
+# Ignore .env and database files
+*.env
+*.sqlite3
+
+# Byte-compiled / cache
 __pycache__/
 *.py[cod]
 
-# Ignore virtual environments
-**/env/
-**/.env/
-
-# Ignore database files (optional)
-**/db.sqlite3
-
-# Ignore IDE/editor configs (optional)
+# VS Code settings
 .vscode/
-*.code-workspace
+
+# System files
 .DS_Store
