@@ -1,0 +1,19 @@
+# air_temperature/.gitignore
+
+# Python bytecode and cache
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+env/
+.venv/
+
+# Django stuff
+db.sqlite3
+
+# Local environment variables
+.env
+
+# Editor files
+.vscode/
+.DS_Store
