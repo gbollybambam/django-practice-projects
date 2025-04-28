@@ -1,0 +1,30 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+    <h1>Welcome to the Blog</h1>
+
+    <h2>User Created Posts</h2>
+    {% for post in user_posts %}
+    <div>
+        <h3>{{ post.title }}</h3>
+        <p>{{ post.content|truncatechars:150 }}</p>
+        <small>By {{ post.author.email }} | {{ post.created_at }}</small>
+    </div>
+    {% empty %}
+    <p>No user-created posts yet!</p>
+    {% endfor %}
+
+    <hr>
+
+    <h2>News from the Web</h2>
+    {% for news in api_posts %}
+    <div>
+        <h3>{{ news.title }}</h3>
+        <p>{{ news.description }}</p>
+        <small>Source: {{ news.source.name }}</small>
+        <a href="{{ news.url }}" target="_blank">Read more</a>
+    </div>
+    {% empty %}
+    <p>No news posts available.</p>
+    {% endfor %}
+{% endblock %}
