@@ -1,30 +1,33 @@
 {% extends 'base_generic.html' %}
 
 {% block content %}
-    <h1>Welcome to the Blog</h1>
+<form method='get'>
+    <select name='source' onchange="this.form.submit()">
+        <option value = "all" {% if filter_type == 'all'%} selected{% endif %} > All </option>
+        <option value = "user" {% if filter_type == 'user'%} selected{% endif %} > User Posts </option>
+        <option value = "api" {% if filter_type == 'api'%} selected{% endif %} > API </option>
+    </select>
+</form>
 
-    <h2>User Created Posts</h2>
-    {% for post in user_posts %}
-    <div>
-        <h3>{{ post.title }}</h3>
-        <p>{{ post.content|truncatechars:150 }}</p>
-        <small>By {{ post.author.email }} | {{ post.created_at }}</small>
-    </div>
-    {% empty %}
-    <p>No user-created posts yet!</p>
-    {% endfor %}
+{% for post in page_obj %}
+    {% if post.title %}
+    <h3>{{ post.title }}</h3>
+    <p>{{ post.description|default:post.content }}</p>
+        {% if post.url %}
+            <a href="{{ post.url }}" target="_blank">Read More</a>
+        {% endif %}
+    {% endif %}
+{% endfor %}
 
-    <hr>
+<div>
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}&source={{ filter_type }}">Previous</a>
+    {% endif %}
 
-    <h2>News from the Web</h2>
-    {% for news in api_posts %}
-    <div>
-        <h3>{{ news.title }}</h3>
-        <p>{{ news.description }}</p>
-        <small>Source: {{ news.source.name }}</small>
-        <a href="{{ news.url }}" target="_blank">Read more</a>
-    </div>
-    {% empty %}
-    <p>No news posts available.</p>
-    {% endfor %}
+    <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}&source={{ filter_type }}">Next</a>
+    {% endif %}
+</div>
 {% endblock %}
