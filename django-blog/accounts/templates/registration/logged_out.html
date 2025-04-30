@@ -1,5 +1,5 @@
 {% extends "base_generic.html" %}
 {% block content %}
     <h2>You have been logged out successfully.</h2>
-    <a href="{% url 'login' %}">Login again</a>
+    <p><a href="{% url 'login' %}">Login </a> or <a href="{% url 'signup' %}">Sign Up</a></p>
 {% endblock %}
