@@ -45,6 +45,15 @@ def Blog(request):
     })
 
 @login_required
-def BlogDetailVIew(request):
+def BlogDetailVIew(request, pk):
     post = get_object_or_404(Post, pk=pk)
     return render(request, 'blog/post_detail.html', {'post': post})
+
+@login_required
+def api_post_detail(request, index):
+    api_posts = get_api_posts()
+
+    try:
+        post = api_posts[index]
+    e
+
