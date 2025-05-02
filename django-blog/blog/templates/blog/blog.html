@@ -30,5 +30,62 @@
         <a href="?page={{ page_obj.next_page_number }}&source={{ filter_type }}">Next</a>
     {% endif %}
 </div>
-
 {% endblock %}
+
+<!-- ✅ 2. Detail Page for Each Blog Post
+Create a post_detail view and template
+
+Show full content, image, and source
+
+If from API, show external link too
+
+✅ 3. Create/Edit/Delete for User Posts
+Let users:
+
+Create posts (already done)
+
+Edit their posts
+
+Delete their posts
+Use Django’s built-in permissions to ensure users can only manage their own content.
+
+✅ 4. Rich Text Editor for Content
+Use Django CKEditor or [TinyMCE] to:
+
+Improve formatting of user-generated content
+
+Allow links, images, bold text, etc.
+
+✅ 5. Add Slugs to Posts
+Make your post URLs clean:
+
+bash
+Copy code
+/post/42/ → /post/gbolahan-leads-tech-revival/
+✅ 6. Add Tags or Categories
+Let users and admins categorize posts:
+
+“Tech”, “Faith”, “Business”, “Leadership”, etc.
+
+Use something like django-taggit for tagging
+
+✅ 7. Search Functionality
+Let users search all blog content (title, description, author, etc.)
+
+✅ 8. User Profiles (Extended)
+Allow users to:
+
+Add a bio, profile image, social links
+
+View other users’ profiles and their posts
+
+✅ 9. Commenting System
+Enable comments on user posts (optional for API posts).
+Use Django models or an external system like Disqus.
+
+✅ 10. Admin Dashboard Improvements
+Make admin friendlier:
+
+Customize admin.py for better post preview
+
+Add filters and list display options -->
