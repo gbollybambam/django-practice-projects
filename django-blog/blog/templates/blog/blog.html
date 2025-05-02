@@ -11,7 +11,9 @@
 
 {% for post in page_obj %}
     {% if post.title %}
-    <h3>{{ post.title }}</h3>
+    <h3>
+        <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a>
+    </h3>
     <p>{{ post.description|default:post.content }}</p>
         {% if post.url %}
             <a href="{{ post.url }}" target="_blank">Read More</a>

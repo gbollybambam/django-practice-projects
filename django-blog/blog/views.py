@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from blog.models import Post
@@ -43,3 +43,8 @@ def Blog(request):
         'page_obj': page_obj,
         'filter_type': filter_type
     })
+
+@login_required
+def BlogDetailVIew(request):
+    post = get_object_or_404(Post, pk=pk)
+    return render(request, 'blog/post_detail.html', {'post': post})
