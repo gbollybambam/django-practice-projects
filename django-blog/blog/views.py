@@ -5,6 +5,7 @@ from blog.models import Post
 from django.core.paginator import Paginator
 import requests
 from random import shuffle
+from django.http import Http404
 
 # Create your views here.
 def get_api_posts():
@@ -45,7 +46,7 @@ def Blog(request):
     })
 
 @login_required
-def BlogDetailVIew(request, pk):
+def BlogDetailView(request, pk):
     post = get_object_or_404(Post, pk=pk)
     return render(request, 'blog/post_detail.html', {'post': post})
 
@@ -55,5 +56,9 @@ def api_post_detail(request, index):
 
     try:
         post = api_posts[index]
-    e
+    except IndexError:
+        raise Http404("Post not found.")
 
+    return render(request, 'blog/api_post_detail.html', {
+        'post': post
+    })

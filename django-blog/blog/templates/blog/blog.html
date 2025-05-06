@@ -12,7 +12,11 @@
 {% for post in page_obj %}
     {% if post.title %}
     <h3>
-        <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a>
+        {% if post.id %}
+            <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a>
+        {% else %}
+            <a href="{% url 'api_post_detail' forloop.counter0 %}">{{ post.title }}</a>
+        {% endif %}
     </h3>
     <p>{{ post.description|default:post.content }}</p>
         {% if post.url %}
