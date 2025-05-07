@@ -44,10 +44,10 @@ def serialize_combined_posts(posts):
         else:
             serialized.append({
                 'type': 'api',
-                'title': post['title'],
-                'description': post.get('description'),
-                'content': post.get('content'),
-                'url': post.get('url')
+                'title': post.title,
+                'description': post.description,
+                'content': post.content,
+                'url': post.url
             })
     return serialized
 
@@ -65,16 +65,22 @@ def deserialize_combined_posts(serialized):
 
     return posts
 
+class APIPost:
+    def __init__(self, data, index):
+        self.__dict__.update(data)
+        self.source = 'api'
+        self.api_index = index
+
 @login_required
 def Blog(request):
     filter_type = request.GET.get('source', 'all')
     user_posts = Post.objects.all().order_by('-published_at')
-    api_posts = get_cached_api_posts()
+    raw_api_posts = get_cached_api_posts()
 
-    for i, post in enumerate(api_posts):
-        post.source = 'api'
-        post.api_index = i
-
+    # for i, post in enumerate(api_posts):
+    #     post.source = 'api'
+    #     post.api_index = i
+    api_posts = [APIPost(post, i) for i, post in enumerate(raw_api_posts)]
 
     combined = []
 
