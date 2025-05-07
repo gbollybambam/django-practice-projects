@@ -33,12 +33,44 @@ def get_cached_api_posts():
         cache.set('newsapi_posts', posts, CACHE_TIMEOUT)
     return posts
 
+def serialize_combined_posts(posts):
+    serialized = []
+    for post in posts:
+        if hasattr(post, 'id'):
+            serialized.append({
+                'type': 'user',
+                'id': post.id
+            })
+        else:
+            serialized.append({
+                'type': 'api',
+                'title': post['title'],
+                'description': post.get('description'),
+                'content': post.get('content'),
+                'url': post.get('url')
+            })
+    return serialized
+
+def deserialize_combined_posts(serialized):
+    user_posts = {p.id: p for p in Post.objects.all()}
+    posts = []
+
+    for item in serialized:
+        if item['type'] == 'user':
+            post = user_posts.get(item['id'])
+            if post:
+                post.append(post)
+        else:
+            posts.apend(item)
+
+    return posts
+
 @login_required
 def Blog(request):
     filter_type = request.GET.get('source', 'all')
     user_posts = Post.objects.all().order_by('-published_at')
-    
     api_posts = get_cached_api_posts()
+
     for i, post in enumerate(api_posts):
         post.source = 'api'
         post.api_index = i
@@ -48,11 +80,18 @@ def Blog(request):
 
     if filter_type == 'user':
         combined = list(user_posts)
+        request.session.pop('combined_posts', None)
     elif filter_type == 'api':
         combined = api_posts
+        request.session.pop('combined_posts', None)
     else:
-        combined = list(user_posts) + api_posts
-        shuffle(combined)
+        if 'combined_posts' in request.session:
+            combined_data = request.session['combined_posts']
+            combined = deserialize_combined_posts(combined_data)
+        else:
+            combined = list(user_posts) + api_posts
+            shuffle(combined)
+            request.session['combined_posts'] = serialize_combined_posts(combined)
 
 
     paginator = Paginator(combined, 5)
