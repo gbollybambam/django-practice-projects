@@ -15,7 +15,7 @@
         {% if post.id %}
             <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a>
         {% else %}
-            <a href="{% url 'api_post_detail' forloop.counter0 %}">{{ post.title }}</a>
+            <a href="{% url 'api_post_detail' post.api_index %}">{{ post.title }}</a>
         {% endif %}
     </h3>
     <p>{{ post.description|default:post.content }}</p>
@@ -40,7 +40,7 @@
 
 <!-- ✅ 2. Detail Page for Each Blog Post
 Create a post_detail view and template
-
+ 
 Show full content, image, and source
 
 If from API, show external link too

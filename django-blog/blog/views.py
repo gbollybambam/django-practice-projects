@@ -6,6 +6,11 @@ from django.core.paginator import Paginator
 import requests
 from random import shuffle
 from django.http import Http404
+# cache system
+from django.core.cache import cache
+import time
+
+CACHE_TIMEOUT = 60 * 5
 
 # Create your views here.
 def get_api_posts():
@@ -20,12 +25,26 @@ def get_api_posts():
         print(f'Error fetching external posts : {e}')
         return []
 
+#cached system
+def get_cached_api_posts():
+    posts = cache.get('newsapi_posts')
+    if posts is None:
+        posts = get_api_posts()
+        cache.set('newsapi_posts', posts, CACHE_TIMEOUT)
+    return posts
 
 @login_required
 def Blog(request):
     filter_type = request.GET.get('source', 'all')
     user_posts = Post.objects.all().order_by('-published_at')
-    api_posts = get_api_posts()
+    
+    api_posts = get_cached_api_posts()
+    for i, post in enumerate(api_posts):
+        post.source = 'api'
+        post.api_index = i
+        
+
+    combined = []
 
     if filter_type == 'user':
         combined = list(user_posts)
@@ -52,8 +71,7 @@ def BlogDetailView(request, pk):
 
 @login_required
 def api_post_detail(request, index):
-    api_posts = get_api_posts()
-
+    api_posts = get_cached_api_posts()
     try:
         post = api_posts[index]
     except IndexError:
