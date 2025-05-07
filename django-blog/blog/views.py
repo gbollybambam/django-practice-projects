@@ -42,7 +42,7 @@ def Blog(request):
     for i, post in enumerate(api_posts):
         post.source = 'api'
         post.api_index = i
-        
+
 
     combined = []
 
@@ -73,8 +73,8 @@ def BlogDetailView(request, pk):
 def api_post_detail(request, index):
     api_posts = get_cached_api_posts()
     try:
-        post = api_posts[index]
-    except IndexError:
+        post = api_posts[int(index)]
+    except (IndexError, ValueError):
         raise Http404("Post not found.")
 
     return render(request, 'blog/api_post_detail.html', {
