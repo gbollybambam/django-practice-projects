@@ -10,7 +10,7 @@ from django.http import Http404
 from django.core.cache import cache
 import time
 
-CACHE_TIMEOUT = 60 * 5
+CACHE_TIMEOUT = 60 * 10
 
 # Create your views here.
 def get_api_posts():
@@ -65,11 +65,12 @@ def deserialize_combined_posts(serialized):
 
     return posts
 
+
 class APIPost:
     def __init__(self, data, index):
         self.__dict__.update(data)
         self.source = 'api'
-        self.api_index = index
+        self.index = index
 
 @login_required
 def Blog(request):
@@ -77,9 +78,6 @@ def Blog(request):
     user_posts = Post.objects.all().order_by('-published_at')
     raw_api_posts = get_cached_api_posts()
 
-    # for i, post in enumerate(api_posts):
-    #     post.source = 'api'
-    #     post.api_index = i
     api_posts = [APIPost(post, i) for i, post in enumerate(raw_api_posts)]
 
     combined = []
