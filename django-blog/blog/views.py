@@ -36,20 +36,22 @@ def get_cached_api_posts():
 def serialize_combined_posts(posts):
     serialized = []
     for post in posts:
-        if hasattr(post, 'id'):
+        if hasattr(post, 'id'):  # User post
             serialized.append({
                 'type': 'user',
                 'id': post.id
             })
-        else:
+        else:  # API post
             serialized.append({
                 'type': 'api',
                 'title': post.title,
                 'description': post.description,
                 'content': post.content,
-                'url': post.url
+                'url': post.url,
+                'api_index': getattr(post, 'api_index', 0)
             })
     return serialized
+
 
 def deserialize_combined_posts(serialized):
     user_posts = {p.id: p for p in Post.objects.all()}
@@ -59,11 +61,12 @@ def deserialize_combined_posts(serialized):
         if item['type'] == 'user':
             post = user_posts.get(item['id'])
             if post:
-                post.append(post)
-        else:
-            posts.apend(item)
-
+                posts.append(post)
+        elif item['type'] == 'api':
+            post = APIPost(item, item.get('api_index', 0))
+            posts.append(post)
     return posts
+
 
 
 class APIPost:
