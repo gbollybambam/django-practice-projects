@@ -48,7 +48,7 @@ def serialize_combined_posts(posts):
                 'description': post.description,
                 'content': post.content,
                 'url': post.url,
-                'api_index': getattr(post, 'api_index', 0)
+                'api_index': post.index
             })
     return serialized
 
@@ -63,7 +63,7 @@ def deserialize_combined_posts(serialized):
             if post:
                 posts.append(post)
         elif item['type'] == 'api':
-            post = APIPost(item, item.get('api_index', 0))
+            post = APIPost(item, item['api_index'])
             posts.append(post)
     return posts
 
@@ -75,6 +75,7 @@ class APIPost:
         self.source = 'api'
         self.index = index
 
+
 @login_required
 def Blog(request):
     filter_type = request.GET.get('source', 'all')
@@ -82,7 +83,6 @@ def Blog(request):
     raw_api_posts = get_cached_api_posts()
 
     api_posts = [APIPost(post, i) for i, post in enumerate(raw_api_posts)]
-
     combined = []
 
     if filter_type == 'user':
@@ -99,7 +99,7 @@ def Blog(request):
             combined = list(user_posts) + api_posts
             shuffle(combined)
             request.session['combined_posts'] = serialize_combined_posts(combined)
-
+    
 
     paginator = Paginator(combined, 5)
     page_number = request.GET.get('page')
