@@ -52,7 +52,6 @@ def serialize_combined_posts(posts):
             })
     return serialized
 
-
 def deserialize_combined_posts(serialized):
     user_posts = {p.id: p for p in Post.objects.all()}
     posts = []
@@ -67,14 +66,11 @@ def deserialize_combined_posts(serialized):
             posts.append(post)
     return posts
 
-
-
 class APIPost:
     def __init__(self, data, index):
         self.__dict__.update(data)
         self.source = 'api'
         self.index = index
-
 
 @login_required
 def Blog(request):

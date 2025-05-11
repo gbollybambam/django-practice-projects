@@ -13,9 +13,9 @@
     {% if post.title %}
     <h3>
         {% if post.id %}
-            <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a>
+            <a href="{% url 'post_detail' post.id %}?page={{ page_obj.number }}&source={{ filter_type }}">{{ post.title }}</a>
         {% else %}
-            <a href="{% url 'api_post_detail' post.index %}">{{ post.title }}</a>
+            <a href="{% url 'api_post_detail' post.index %}?page={{ page_obj.number }}&source={{ filter_type }}">{{ post.title }}</a>
         {% endif %}
     </h3>
     <p>{{ post.description|default:post.content }}</p>
