@@ -130,7 +130,7 @@ def api_post_detail(request, index):
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
-    template_name = 'blog/post_form.html'
+    template_name = 'blog/create_post.html'
     success_url = '/blog/'
 
     def form_valid(self, form):
