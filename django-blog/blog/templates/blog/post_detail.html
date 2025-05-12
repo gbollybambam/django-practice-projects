@@ -9,5 +9,5 @@
         <p><a href="{{ post.url }}" target="_blank">Readmore</a></p>
     {% endif %}
 
-    <a href="{% url 'blog' %}?{{ request.GET.urlencode }}?page={{ request.GET.page|default:'1' }}&source={{ request.GET.source|default:'all' }}">Back to Posts</a>
+    <a href="{% url 'blog' %}?page={{ request.GET.page|default:'1' }}&source={{ request.GET.source|default:'all' }}">Back to Posts</a>
 {% endblock %}

@@ -9,6 +9,10 @@
     </select>
 </form>
 
+{% if user.is_authenticated %}
+    <p><a href="{% url %}"></a></p>
+{% endif %}
+
 {% for post in page_obj %}
     {% if post.title %}
     <h3>

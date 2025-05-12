@@ -6,9 +6,12 @@ from django.core.paginator import Paginator
 import requests
 from random import shuffle
 from django.http import Http404
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import CreateView
+from .forms import PostForm
 # cache system
 from django.core.cache import cache
-import time
+
 
 CACHE_TIMEOUT = 60 * 10
 
@@ -122,3 +125,14 @@ def api_post_detail(request, index):
     return render(request, 'blog/api_post_detail.html', {
         'post': post
     })
+
+
+class PostCreateView(LoginRequiredMixin, CreateView):
+    model = Post
+    form_class = PostForm
+    template_name = 'blog/post_form.html'
+    success_url = '/blog/'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)

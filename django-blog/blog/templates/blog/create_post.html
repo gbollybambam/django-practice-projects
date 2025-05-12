@@ -1,0 +1,10 @@
+{% extends 'base_generic.html' %}
+{% block content %}
+    <h2>Create New Post</h2>
+    <form method=""post>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Create</button>
+    </form>
+    <a href="{% url 'blog' %}?page={{ request.GET.page|default:'1' }}&source={{ request.GET.source|default:'all' }}">Back to posts</a>
+{% endblock %}
