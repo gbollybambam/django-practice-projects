@@ -6,8 +6,8 @@ from django.core.paginator import Paginator
 import requests
 from random import shuffle
 from django.http import Http404
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic.edit import CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic.edit import CreateView, UpdateView
 from .forms import PostForm
 # cache system
 from django.core.cache import cache
@@ -136,3 +136,19 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Post
+    form_class = PostForm
+    template_name = 'blog/edit_post.html'
+    success_url = '/blog/'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        post = self.get_object()
+        return post.author == self.request.user
+    
