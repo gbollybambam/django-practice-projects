@@ -1,0 +1,14 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+<div>
+    <h2>Edit Post</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">Save Changes</button>
+        <a href="{% url 'post-detail' object.pk %}?page={{ request.GET.page|default:'1' }}&source={{ request.GET.source|default:'all' }}">Cancel</a>
+    </form>
+</div>
+{% endblock %}

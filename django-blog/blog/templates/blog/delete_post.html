@@ -1,0 +1,10 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+<h2>Are you sure you want to delete "{{ object.title }}"?</h2>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirm Delete</button>
+    <a href="{% url 'post-detail' object.pk %}?page={{ request.GET.page|default:'1' }}&source={{ request.GET.source|default:'all' }}">Cancel</a>
+</form>
+{% endblock %}

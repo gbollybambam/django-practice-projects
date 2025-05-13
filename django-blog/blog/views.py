@@ -7,8 +7,9 @@ import requests
 from random import shuffle
 from django.http import Http404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .forms import PostForm
+from django.urls import reverse
 # cache system
 from django.core.cache import cache
 
@@ -126,7 +127,6 @@ def api_post_detail(request, index):
         'post': post
     })
 
-
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
@@ -147,8 +147,27 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+    
+    def get_success_url(self):
+        page = self.request.GET.get('page', '1')
+        source = self.request.GET.get('source', 'all')
+        return f"{reverse('blog')}?page={page}&source={source}"
 
     def test_func(self):
         post = self.get_object()
         return post.author == self.request.user
-    
+
+
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Post
+    template_name = 'blog/delete_post.html'
+    success_url = '/blog/'
+
+    def get_success_url(self):
+        page = self.request.GET.get('page', '1')
+        source = self.request.GET.get('source', 'all')
+        return f"{reverse('blog')}?page={page}&source={source}"
+
+    def test_func(self):
+        post = self.get_object()
+        return post.author == self.request.user
