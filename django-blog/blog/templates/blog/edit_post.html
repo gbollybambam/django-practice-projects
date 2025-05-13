@@ -8,7 +8,7 @@
         {{ form.as_p }}
 
         <button type="submit">Save Changes</button>
-        <a href="{% url 'post-detail' object.pk %}?page={{ request.GET.page|default:'1' }}&source={{ request.GET.source|default:'all' }}">Cancel</a>
+        <a href="{% url 'post_detail' object.pk %}?page={{ request.GET.page|default:'1' }}&source={{ request.GET.source|default:'all' }}">Cancel</a>
     </form>
 </div>
 {% endblock %}
