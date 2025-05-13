@@ -27,10 +27,10 @@
             <a href="{{ post.url }}" target="_blank">Read More</a>
         {% endif %}
 
-        {{ if post.id and user == post.author }}
+        {% if post.id and user == post.author %}
             <a href="{% url 'edit_post' post.id %}?page={{ page_obj.number }}&source={{ filter_type }}">Edit</a>
             <a href="{% url 'delete_post' post.id %}?page={{ page_obj.number }}&source={{ filter_type }}">Delete</a>
-        {{ endif }}
+        {% endif %}
     {% endif %}
 {% endfor %}
 
