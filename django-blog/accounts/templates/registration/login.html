@@ -1,10 +1,26 @@
 {% extends "base_generic.html" %}
+{% load static %}
+
+{% block title %}
+    <title>Login | Blog</title>
+{% endblock %}
+
 {% block content %}
-<h2>Login</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Log in</button>
-</form>
-<div><a href="{% url 'signup' %}">SignUp</a></div>
+<section class="login-section">
+    <div class="container">
+        <div class="cover">
+            <p>Largest Blog source</p>
+            <h1>POWERED BY CREATORS AROUND THE WORLD</h1>
+            <p>Don't have acount</p>
+            <p><a href="{% url 'signup' %}">Create account -></a></p>
+        </div>
+        <div class="login-form">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Log in</button>
+            </form>
+        </div>
+    </div>
+</section>
 {% endblock %}
