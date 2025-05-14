@@ -5,13 +5,17 @@
     <title>Login | Blog</title>
 {% endblock %}
 
+{% block leaf %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
 {% block content %}
 <section class="login-section">
     <div class="container">
         <div class="cover">
             <p>Largest Blog source</p>
             <h1>POWERED BY CREATORS AROUND THE WORLD</h1>
-            <p>Don't have acount</p>
+            <p>Don't have account?</p>
             <p><a href="{% url 'signup' %}">Create account -></a></p>
         </div>
         <div class="login-form">
