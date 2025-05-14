@@ -13,10 +13,12 @@
 <section class="login-section">
     <div class="container">
         <div class="cover">
-            <p>Largest Blog source</p>
-            <h1>POWERED BY CREATORS AROUND THE WORLD</h1>
-            <p>Don't have account?</p>
-            <p><a href="{% url 'signup' %}">Create account -></a></p>
+            <p class="subheading">LARGEST BLOG SOURCE</p>
+            <h1>
+                POWERED BY <span class="highlight block-line">CREATORS AROUND</span> THE WORLD.
+            </h1>
+            <p class="signup-prompt">Don't have account?</p>
+            <p><a href="{% url 'signup' %}" class="create-account-link">Create account →</a></p>
         </div>
         <div class="login-form">
             <form method="post">
