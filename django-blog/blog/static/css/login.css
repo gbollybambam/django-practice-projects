@@ -1,4 +1,3 @@
-/* css file */
 .login-section {
     display: flex;
     justify-content: center;
@@ -165,6 +164,7 @@
     max-width: 36rem;
 }
 
+
 .login-title {
     font-size: 1.2rem;
     font-weight: 600;
@@ -235,3 +235,5 @@
 .login-btn:hover {
     background-color: #111;
 }
+
+
