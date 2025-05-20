@@ -1,0 +1,80 @@
+body {
+    color: #aaa;
+    letter-spacing: 0.1rem;
+}
+
+.header-bar {
+    display: flex;
+    gap: 24rem;
+    margin: 2rem;    
+    text-transform: uppercase;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.filter-bar select {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: inherit;
+    text-transform: uppercase;
+    cursor: pointer;
+    /* Space for custom arrow */
+}
+
+.link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.posts h1 {
+    margin: 5rem 2rem;
+    font-size: 6.2rem;
+}
+
+.post-item {
+    padding: 1.5rem 0 0 0;
+    margin: 1rem 2rem;
+    border-top: 4px solid #eee;
+}
+
+.post-item:last-of-type {
+    border-bottom: 4px solid #eee;
+}
+
+.post-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.description {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+.read-more {
+    display: inline-block;
+    font-weight: bold;
+    font-size: 1.2rem;
+    border-bottom: 2px solid #ccc;
+    color: inherit;
+    transition: all 0.3s ease;
+}
+
+.read-more:hover {
+    border-color: #999;
+}
+
+.option {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+}

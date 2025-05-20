@@ -268,4 +268,42 @@
     margin-left: -2rem;
 }
 
+.error-messages {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    border-radius: 1rem;
+    font-size: 1rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+    animation: fadeIn 0.5s ease-in-out;
+}
 
+.error-messages p {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+
+.error-messages ul {
+    margin-top: 1rem;
+    padding-left: 1.5rem;
+}
+
+.error-messages li {
+    list-style-type: none;
+    margin-bottom: 0.5rem;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

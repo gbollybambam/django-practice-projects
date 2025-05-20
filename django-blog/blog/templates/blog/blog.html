@@ -1,106 +1,83 @@
 {% extends 'base_generic.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Blog Posts</title>
+{% endblock %}
+
+{% block leaf %}
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}"></link>
+{% endblock %}
 
 {% block content %}
-<form method='get'>
-    <select name='source' onchange="this.form.submit()">
-        <option value = "all" {% if filter_type == 'all'%} selected{% endif %} > All </option>
-        <option value = "user" {% if filter_type == 'user'%} selected{% endif %} > User Posts </option>
-        <option value = "api" {% if filter_type == 'api'%} selected{% endif %} > API </option>
-    </select>
-</form>
-
-{% if user.is_authenticated %}
-    <p><a href="{% url 'create_post' %}">+ Create New Post</a></p>
-{% endif %}
-
-{% for post in page_obj %}
-    {% if post.title %}
-    <h3>
-        {% if post.id %}
-            <a href="{% url 'post_detail' post.id %}?page={{ page_obj.number }}&source={{ filter_type }}">{{ post.title }}</a>
-        {% else %}
-            <a href="{% url 'api_post_detail' post.index %}?page={{ page_obj.number }}&source={{ filter_type }}">{{ post.title }}</a>
-        {% endif %}
-    </h3>
-    <p>{{ post.description|default:post.content }}</p>
-        {% if post.url %}
-            <a href="{{ post.url }}" target="_blank">Read More</a>
-        {% endif %}
-
-        {% if post.id and user == post.author %}
-            <a href="{% url 'edit_post' post.id %}?page={{ page_obj.number }}&source={{ filter_type }}">Edit</a>
-            <a href="{% url 'delete_post' post.id %}?page={{ page_obj.number }}&source={{ filter_type }}">Delete</a>
-        {% endif %}
+<div class="header-bar">
+    <span class="user">{{ user }}</span>
+    <div class="filter-bar">
+        <form method='get'>
+            <select name='source' onchange="this.form.submit()">
+                <option value = "all" {% if filter_type == 'all'%} selected{% endif %} > All </option>
+                <option value = "user" {% if filter_type == 'user'%} selected{% endif %} > User Posts </option>
+                <option value = "api" {% if filter_type == 'api'%} selected{% endif %} > API </option>
+            </select>
+        </form>
+    </div>
+    {% if user.is_authenticated %}
+    <div class="create-post">
+        <p><a class="link" href="{% url 'create_post' %}">+ Create New Post</a></p>
+    </div>
     {% endif %}
-{% endfor %}
+</div>
 
-<div>
+
+
+
+<div class="posts">
+    <h1>BLOG POSTS</h1>
+    {% for post in page_obj %}
+        {% if post.title %}
+        <div class="post-item">            
+            <div>
+                {% if post.id %}
+                    <p class="post-title" >{{ post.title }}</p>
+                {% else %}
+                    <p class="post-title">{{ post.title }}</p>
+                {% endif %}
+            </div>
+            <p class="description">{{ post.description|default:post.content }}</p>
+
+            <div class="option">
+                <!-- {% if post.url %}
+                    <div class="post-meta">
+                        <a href="{{ post.url }}" target="_blank">Read More</a>
+                    </div>
+                {% else %}
+                <div class="post-meta">
+                    <a href="{{ post.url }}" target="_blank">Read More</a>
+                </div>
+                {% endif %} -->
+                {% if post.id %}
+                <a  class="read-more" href="{% url 'post_detail' post.id %}?page={{ page_obj.number }}&source={{ filter_type }}">Read More</a>
+                {% else %}
+                <a  class="read-more" href="{% url 'api_post_detail' post.index %}?page={{ page_obj.number }}&source={{ filter_type }}">Read More</a>
+                {% endif %}
+        
+                <!-- {% if post.id and user == post.author %} -->
+                    <a class="read-more" href="{% url 'edit_post' post.id %}?page={{ page_obj.number }}&source={{ filter_type }}">Edit</a>
+                    <a class="read-more" href="{% url 'delete_post' post.id %}?page={{ page_obj.number }}&source={{ filter_type }}">Delete</a>
+                <!-- {% endif %} -->
+            </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+</div>
+    
+<div class="pagination">   
     {% if page_obj.has_previous %}
         <a href="?page={{ page_obj.previous_page_number }}&source={{ filter_type }}">Previous</a>
-    {% endif %}
-
+    {% endif %}    
     <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
-
     {% if page_obj.has_next %}
         <a href="?page={{ page_obj.next_page_number }}&source={{ filter_type }}">Next</a>
     {% endif %}
 </div>
 {% endblock %}
-
-<!-- ✅ 2. Detail Page for Each Blog Post
-Create a post_detail view and template
- 
-Show full content, image, and source
-
-If from API, show external link too
-
-✅ 3. Create/Edit/Delete for User Posts
-Let users:
-
-Create posts (already done)
-
-Edit their posts
-
-Delete their posts
-Use Django’s built-in permissions to ensure users can only manage their own content.
-
-✅ 4. Rich Text Editor for Content
-Use Django CKEditor or [TinyMCE] to:
-
-Improve formatting of user-generated content
-
-Allow links, images, bold text, etc.
-
-✅ 5. Add Slugs to Posts
-Make your post URLs clean:
-
-bash
-Copy code
-/post/42/ → /post/gbolahan-leads-tech-revival/
-✅ 6. Add Tags or Categories
-Let users and admins categorize posts:
-
-“Tech”, “Faith”, “Business”, “Leadership”, etc.
-
-Use something like django-taggit for tagging
-
-✅ 7. Search Functionality
-Let users search all blog content (title, description, author, etc.)
-
-✅ 8. User Profiles (Extended)
-Allow users to:
-
-Add a bio, profile image, social links
-
-View other users’ profiles and their posts
-
-✅ 9. Commenting System
-Enable comments on user posts (optional for API posts).
-Use Django models or an external system like Disqus.
-
-✅ 10. Admin Dashboard Improvements
-Make admin friendlier:
-
-Customize admin.py for better post preview
-
-Add filters and list display options -->
