@@ -236,4 +236,36 @@
     background-color: #111;
 }
 
+.green-circles {
+    margin-left: 0.5rem;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.circle {
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.circle1 {
+    background-color: #4ca100;
+}
+
+.circle2 {
+    background-color: #76d700;
+    margin-left: -2rem;
+}
+
+.circle3 {
+    background-color: #8aea14;
+    margin-left: -2rem;
+}
+
+.circle4 {
+    background-color: #b2ff66;
+    margin-left: -2rem;
+}
+
 
