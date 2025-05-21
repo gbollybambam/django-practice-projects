@@ -35,7 +35,9 @@
     <h1>BLOG POSTS</h1>
     {% for post in page_obj %}
         {% if post.title %}
-        <div class="post-item">            
+        <div class="post-item"> 
+
+          
             <div>
                 {% if post.id %}
                     <p class="post-title" >{{ post.title }}</p>
@@ -46,15 +48,7 @@
             <p class="description">{{ post.description|default:post.content }}</p>
 
             <div class="option">
-                <!-- {% if post.url %}
-                    <div class="post-meta">
-                        <a href="{{ post.url }}" target="_blank">Read More</a>
-                    </div>
-                {% else %}
-                <div class="post-meta">
-                    <a href="{{ post.url }}" target="_blank">Read More</a>
-                </div>
-                {% endif %} -->
+
                 {% if post.id %}
                 <a  class="read-more" href="{% url 'post_detail' post.id %}?page={{ page_obj.number }}&source={{ filter_type }}">Read More</a>
                 {% else %}
