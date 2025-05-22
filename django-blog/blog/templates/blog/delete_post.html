@@ -1,10 +1,23 @@
 {% extends 'base_generic.html' %}
 
-{% block content %}
-<h2>Are you sure you want to delete "{{ object.title }}"?</h2>
-<form method="post">
-    {% csrf_token %}
-    <button type="submit">Confirm Delete</button>
-    <a href="{% url 'post_detail' object.pk %}?page={{ request.GET.page|default:'1' }}&source={{ request.GET.source|default:'all' }}">Cancel</a>
-</form>
+{% block title %}
+<title>Confirm Delete</title>
 {% endblock %}
+
+{% block leaf %}
+<link rel="stylesheet" href="{% static 'css/delete_post.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div class="delete-confirm-wrapper">
+    <h2 class="delete-title">🗑️ Are you sure you want to delete <em>"{{ object.title }}"</em>?</h2>
+
+    <form method="post" class="delete-form">
+        {% csrf_token %}
+        <button type="submit" class="btn delete-btn">Yes, Delete</button>
+        <a href="{% url 'post_detail' object.pk %}?page={{ request.GET.page|default:'1' }}&source={{ request.GET.source|default:'all' }}"
+            class="btn cancel-btn">Cancel</a>
+    </form>
+</div>
+{% endblock %}
+
