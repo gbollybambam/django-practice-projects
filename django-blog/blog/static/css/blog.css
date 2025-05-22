@@ -198,6 +198,22 @@ body {
     box-shadow: 0 16px 32px rgba(0, 0, 0, 0.1);
 }
 
+.logout-btn {
+    background-color: #4ca100;
+    color: white;
+    border: none;
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-left: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+    background-color: #3a8000;
+}
+
 /* .post-title {
     font-size: 1.5rem;
     font-weight: 600;

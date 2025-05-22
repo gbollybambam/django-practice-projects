@@ -25,6 +25,10 @@
     <div class="create-post">
         <p><a class="link" href="{% url 'create_post' %}">+ Create New Post</a></p>
     </div>
+    <form method="post" action="{% url 'logout' %}" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="logout-btn">Logout</button>
+    </form>
     {% endif %}
 </div>
 

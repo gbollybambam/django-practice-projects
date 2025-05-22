@@ -136,6 +136,11 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+    
+    def get_success_url(self):
+        page = self.request.POST.get('page') or self.request.GET.get('page') or '1'
+        source = self.request.POST.get('source') or self.request.GET.get('source') or 'all'
+        return f"{reverse('blog')}?page={page}&source={source}"
 
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
