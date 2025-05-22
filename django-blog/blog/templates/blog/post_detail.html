@@ -1,13 +1,25 @@
 {% extends 'base_generic.html' %}
+{% load static %}
+
+{% block title %}
+<title>{{ post.title }}</title>
+{% endblock %}
+
+{% block leaf %}
+<link rel="stylesheet" href="{% static 'css/post_detail.css' %}" />
+{% endblock %}
 
 {% block content %}
-    <h2>{{post.title}}</h2>
-    <p>{{ post.published_at }}</p>
-    <p>{{ post.content }}</p>
+<div class="post-detail-wrapper">
+    <h2 class="post-detail-title">{{ post.title }}</h2>
+    <p class="post-detail-meta">📅 {{ post.published_at }}</p>
+    <div class="post-detail-content">{{ post.content }}</div>
 
     {% if post.url %}
-        <p><a href="{{ post.url }}" target="_blank">Readmore</a></p>
+    <p><a href="{{ post.url }}" class="btn external-link" target="_blank">🔗 Read Full Article</a></p>
     {% endif %}
 
-    <a href="{% url 'blog' %}?page={{ request.GET.page|default:'1' }}&source={{ request.GET.source|default:'all' }}">Back to Posts</a>
+    <a href="{% url 'blog' %}?page={{ request.GET.page|default:'1' }}&source={{ request.GET.source|default:'all' }}"
+        class="btn back-btn">← Back to Posts</a>
+</div>
 {% endblock %}

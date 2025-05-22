@@ -1,11 +1,24 @@
 {% extends 'base_generic.html' %}
+{% load static %}
+
+{% block title %}
+<title>Sign Up</title>
+{% endblock %}
+
+{% block leaf %}
+<link rel="stylesheet" href="{% static 'css/signup.css' %}" />
+{% endblock %}
 
 {% block content %}
-<h2>Create an Account</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">signup</button>
-</form>
-<p>Already have an account? <a href="{% url 'login' %}">Log in here</a></p>
+<div class="auth-container">
+    <h2 class="auth-title">Create an Account</h2>
+    <form method="post" class="auth-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn submit-btn">Sign Up</button>
+    </form>
+    <p class="auth-alt">Already have an account?
+        <a href="{% url 'login' %}" class="auth-link">Log in here</a>
+    </p>
+</div>
 {% endblock %}

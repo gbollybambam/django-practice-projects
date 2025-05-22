@@ -1,5 +1,17 @@
 {% extends "base_generic.html" %}
-{% block content %}
-    <h2>You have been logged out successfully.</h2>
-    <p><a href="{% url 'login' %}">Login </a> or <a href="{% url 'signup' %}">Sign Up</a></p>
+{% load static %}
+
+{% block title %}
+<title>Logged Out</title>
 {% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <h2 class="auth-title">You’ve been logged out</h2>
+    <p class="auth-message">We hope to see you again soon!</p>
+    <div class="auth-actions">
+        <a href="{% url 'login' %}" class="btn auth-btn">Log In</a>
+        <a href="{% url 'signup' %}" class="btn auth-btn secondary">Sign Up</a>
+    </div>
+</div>
+{
