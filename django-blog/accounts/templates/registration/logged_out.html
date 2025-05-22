@@ -1,8 +1,11 @@
 {% extends "base_generic.html" %}
-{% load static %}
 
 {% block title %}
 <title>Logged Out</title>
+{% endblock %}
+
+{% block leaf %}
+<link rel="stylesheet" href="{% static 'css/logged_out.css' %}" />
 {% endblock %}
 
 {% block content %}
@@ -14,4 +17,4 @@
         <a href="{% url 'signup' %}" class="btn auth-btn secondary">Sign Up</a>
     </div>
 </div>
-{
+{% endblock %}

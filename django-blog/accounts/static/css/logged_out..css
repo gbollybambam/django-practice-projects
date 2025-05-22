@@ -1,0 +1,37 @@
+.auth-message {
+    font-size: 1.1rem;
+    color: #444;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.auth-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.auth-btn {
+    padding: 0.7rem 1.5rem;
+    border-radius: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: white;
+    background-color: #4ca100;
+    transition: background-color 0.3s ease;
+}
+
+.auth-btn:hover {
+    background-color: #3a8000;
+}
+
+.auth-btn.secondary {
+    background-color: #ccc;
+    color: #333;
+}
+
+.auth-btn.secondary:hover {
+    background-color: #bbb;
+}
