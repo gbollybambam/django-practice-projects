@@ -1,14 +1,25 @@
 {% extends 'base_generic.html' %}
 
+{% block title %}
+<title>Edit Post</title>
+{% endblock %}
+
+{% block leaf %}
+<link rel="stylesheet" href="{% static 'css/edit_post.css' %}" />
+{% endblock %}
+
 {% block content %}
-<div>
-    <h2>Edit Post</h2>
-    <form method="post">
+<div class="form-wrapper">
+    <h2 class="form-heading">✍️ Edit Post</h2>
+    <form method="post" class="styled-form">
         {% csrf_token %}
         {{ form.as_p }}
 
-        <button type="submit">Save Changes</button>
-        <a href="{% url 'post_detail' object.pk %}?page={{ request.GET.page|default:'1' }}&source={{ request.GET.source|default:'all' }}">Cancel</a>
+        <div class="form-actions">
+            <button type="submit" class="btn save-btn">💾 Save Changes</button>
+            <a href="{% url 'post_detail' object.pk %}?page={{ request.GET.page|default:'1' }}&source={{ request.GET.source|default:'all' }}"
+                class="btn cancel-btn">Cancel</a>
+        </div>
     </form>
 </div>
 {% endblock %}

@@ -1,0 +1,81 @@
+.form-wrapper {
+    max-width: 700px;
+    margin: 4rem auto;
+    padding: 2rem 3rem;
+    background-color: #fff;
+    border-radius: 2rem;
+    box-shadow: 0 0 2rem rgba(0, 0, 0, 0.08);
+    animation: fadeInUp 0.5s ease both;
+}
+
+.form-heading {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #4ca100;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.styled-form p {
+    margin-bottom: 1.5rem;
+}
+
+.styled-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    color: #333;
+}
+
+.styled-form input[type="text"],
+.styled-form textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 1rem;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+}
+
+.styled-form textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 0.7rem 1.4rem;
+    border-radius: 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.save-btn {
+    background-color: #4ca100;
+    color: white;
+}
+
+.save-btn:hover {
+    background-color: #3a8000;
+}
+
+.cancel-btn {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+.cancel-btn:hover {
+    background-color: #ddd;
+}
