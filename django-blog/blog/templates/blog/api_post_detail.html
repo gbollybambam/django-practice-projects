@@ -1,13 +1,31 @@
 {% extends 'base_generic.html' %}
+{% load static %}
+
+{% block title %}
+<title>{{ post.title }}</title>
+{% endblock %}
+
+{% block leaf %}
+<link rel="stylesheet" href="{% static 'css/api_post_detail.css' %}" />
+{% endblock %}
+
 
 {% block content %}
-    <h2>{{ post.title }}</h2>
-    <p><strong>Author:</strong>{{ post.author }}</p>
-    <p><strong>Published at:</strong> {{ post.publishedAt }}</p>
-    <p>{{ post.description|default:post.content }}</p>
+<div class="post-detail-wrapper">
+    <h2 class="post-title">{{ post.title }}</h2>
+    <p class="meta"><strong>Author:</strong> {{ post.author }}</p>
+    <p class="meta"><strong>Published at:</strong> {{ post.publishedAt }}</p>
+
+    <div class="post-body">
+        <p>{{ post.description|default:post.content }}</p>
+    </div>
 
     {% if post.url %}
-        <p><a href="{{ post.url }}" target="_blank">Read full article</a></p>
+    <p><a class="read-full-link" href="{{ post.url }}" target="_blank">🔗 Read full article</a></p>
     {% endif %}
-    <p><a href="{% url 'blog' %}?page={{ request.GET.page|default:'1' }}&source={{ request.GET.source|default:'all' }}">Back to post</a></p>
+
+    <a class="back-link"
+        href="{% url 'blog' %}?page={{ request.GET.page|default:'1' }}&source={{ request.GET.source|default:'all' }}">←
+        Back to posts</a>
+</div>
 {% endblock %}
