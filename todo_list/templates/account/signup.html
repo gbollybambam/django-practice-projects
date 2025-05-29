@@ -1,0 +1,46 @@
+{% extends "base_generic.html" %}
+{% load i18n %}
+{% load socialaccount %}
+
+{% block title %} Sign Up {% endblock %}
+
+{% block main %}
+    <div>
+        <h2>Sign Up</h2>
+        <p>
+            Already have an account?
+            <a href="{% url 'account_login' %}">Sign in</a>
+        </p>
+        <form method="post" action="{% url 'account_signup' %}">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            {% for field in form %}
+                <div>
+                    <label for="{{ field.id_for_label }}">
+                        {{ field.label }}
+                        {% if field.field.required %}
+                        *
+                        {% endif %}
+                    </label>
+                        {{field}}
+                        {% if field.help_text %}
+                            <p>{{ field.help_text }}</p>
+                        {% endif %}
+                        {% for  error in field.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                </div>
+            {% endfor %}
+            <button type="submit">Sign Up</button>
+        </form>
+
+        {% get_providers as socialaccount_providers %}
+        {% if socialaccount_providers %}
+            <div>
+                <p>Or use a third-party</p>
+                {% include "socialaccount/snippets/provider_list.html" with process="signup" %}
+            </div>
+        {% endif %}
+        </div>
+{% endblock %}

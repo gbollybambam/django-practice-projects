@@ -1,0 +1,63 @@
+{% extends "base_generic.html" %}
+{% load i18n %}
+{% load socialaccount %}
+
+{% block title %}Sign In{% endblock %}
+
+{% block main %}
+<h2>Sign In</h2>
+
+{% if messages %}
+<ul>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<p>
+    if you have not created account yet, then please <a href="{% url 'account_signup' %}">sign up</a> first
+</p>
+
+<form method="post" action="{% url 'account_login' %}">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    {% for field in form %}
+        <div>
+            <label for="{{ field.id_for_label }}">
+                {{ field.label }}
+                {% if field.field.required %}
+                *
+                {% endif %}
+            </label>
+            {{ field }}
+            {% if field.help_text %}
+                <p>{{ field.help_text }}</p>
+            {% endif %}
+            {% for error in field.errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+    <div>
+        <label>
+            <!-- {{ form.remember }} Remember Me -->
+        </label>
+    </div>
+
+    <button type="submit">Sign In</button>
+</form>
+
+<p><a href="{% url 'account_reset_password' %}">Forgot your password</a></p>
+
+{% get_providers as socialaccount_providers %}
+{% if socialaccount_providers %}
+<div>
+    <p>Or use a third-party</p>
+    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+</div>
+{% endif %}
+
+{% endblock %}
