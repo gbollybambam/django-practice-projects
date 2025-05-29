@@ -1,0 +1,56 @@
+{% extends 'base_generic.html' %}
+{% load i18n %}
+
+{% block main %}
+<h2>Email Addresses</h2>
+
+{% if emailaddresses %}
+<p>The following email addresses are associated with your account:</p>
+<ul>
+    {% for emailaddress in emailaddresses %}
+    <li>
+        {{ emailaddress.email }}
+        {% if emailaddress.verified %}
+            <strong>(Verified)</strong>
+        {% else %}
+            <em>Unverified</em>
+            <form method="post" action="{% url 'account_email' %}">
+                {% csrf_token %}
+                <input type="hidden" name="email" value="{{ emailaddress.email }}" >
+                <button name="action_send" type="submit">Re-send Verification</button>
+            </form>
+        {% endif %}
+
+        {% if not emailaddress.primary %}
+            <form method="post" action="{% url 'account_email' %}">
+                {% csrf_token %}
+                <input type="hidden" name="email" value="{{ emailaddress.email }}">
+                <button name="action_primary" type="submit">Make Primary</button>
+            </form>
+        {% endif %}
+
+        <form method="post" action="{% url 'account_email' %}">
+            {% csrf_token %}
+            <input type="hidden" name="email" value="{{ emailaddress.email }}">
+            <button name="action_remove" type="submit">Remove</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+    <p>You currently have no email addresses associated with your account</p>
+{% endif %}
+
+<h3>Add Email Address</h3>
+<form method="post" action="{% url 'account_email' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" name="action_add">Add Email</button>
+</form>
+
+<p>
+    <a href="{% url 'account_change_password' %}">{% trans "Change Password" %}</a> |
+    <a href="{% url 'socialaccount_connections' %}">{% trans "Account Connections" %}</a> |
+    <a href="{% url 'account_logout' %}">{% trans "Sign Out" %}</a>
+</p>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base_generic.html' %}
+{% load i18n %}
+
+{% block main %}
+<div>
+    <h2>Sign In with GitHub</h2>
+    <p>You are about to sign in using a third-party account from GitHub</p>
+
+    <form method="post" action="">
+        {% csrf_token %}
+        <button type="submit">Continue</button>
+    </form>
+
+    <p><a href="{% url 'account_login' %}">Back to Sign In options</a></p>
+    <p><a href="{% url 'account_signup' %}">Don't have an account? Sign up</a></p>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base_generic.html' %}
+{% load i18n %}
+
+{% block title %}
+Sign out
+{% endblock %}
+
+{% if user.is_authenticated %}
+    <p>Successfully signed in as {{ user.username }}</p>
+{% endif %}
+
+{% block main %}
+    <h2>Sign Out</h2>
+    <p>Are you sure you want to sign out?</p>
+
+    <form method="post" action="{% url 'account_logout' %}">
+        {% csrf_token %}
+        <button type="submit">Sign Out</button>
+    </form>
+
+    <p>While you're here, you can also:</p>
+    <p>
+        <a href="{% url 'account_email' %}">Update your email address</a> |
+        <a href="{% url 'account_change_password' %}">Change your password</a> |
+        <a href="{% url 'socialaccount_connections' %}">Manage social account connections</a>
+    </p>
+{% endblock %}

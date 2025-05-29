@@ -183,6 +183,9 @@
   .block {
     display: block;
   }
+  .hidden {
+    display: none;
+  }
   .table {
     display: table;
   }
