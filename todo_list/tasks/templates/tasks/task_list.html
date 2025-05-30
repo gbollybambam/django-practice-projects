@@ -1,0 +1,15 @@
+{% extends 'base_generic.html' %}
+{% block title %}
+Your Tasks
+{% endblock %}
+
+{% block main %}
+<ul>
+    {% for task in tasks %}
+    <li>{{ task.title }} - {{ task.description }} - {{ task.due_date }}</li>
+    {% empty %}
+    <li>No tasks Yet.</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'task_create' %}">create task</a>
+{% endblock %}
