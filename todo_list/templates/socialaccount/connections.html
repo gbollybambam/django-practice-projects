@@ -1,0 +1,37 @@
+{% extends "base_generic.html" %}
+{% load i18n %}
+
+{% block title %}
+Connections
+{% endblock %}
+
+{% block main %}
+<h2>Account Connections</h2>
+
+{% if form.accounts  %}
+<p>The following third-party accounts are connected:</p>
+<ul>
+    {% for account in form.accounts %}
+    <li>
+        {{ account.get_provider_display }} - {{ account.uid }}
+        <form method="post" action="{% url 'socialaccount_connections' %}">
+            {% csrf_token %}
+            <input type="hidden" name="account" value="{{ account.id }}">
+            <button type="submit">Remove</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>You currently have no third-party accounts connected to this account.</p>
+{% endif %}
+
+<h3>Add a Third-Party Account</h3>
+{% include "socialaccount/snippets/provider_list.html" with process="connect" %}
+
+<p>
+    <a href="{% url 'account_email' %}">Change Email</a> |
+    <a href="{% url 'account_change_password' %}">Change Password</a> |
+    <a href="{% url 'account_logout' %}">Sign Out</a>
+</p>
+{% endblock %}

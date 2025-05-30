@@ -1,6 +1,10 @@
 {% extends 'base_generic.html' %}
 {% load i18n %}
 
+{% block title %}
+Email Password
+{% endblock %}
+
 {% block main %}
 <h2>Email Addresses</h2>
 
@@ -49,8 +53,8 @@
 </form>
 
 <p>
-    <a href="{% url 'account_change_password' %}">{% trans "Change Password" %}</a> |
-    <a href="{% url 'socialaccount_connections' %}">{% trans "Account Connections" %}</a> |
-    <a href="{% url 'account_logout' %}">{% trans "Sign Out" %}</a>
+    <a href="{% url 'account_change_password' %}">Change Password</a> |
+    <a href="{% url 'socialaccount_connections' %}">Account Connections</a> |
+    <a href="{% url 'account_logout' %}">Sign Out</a>
 </p>
 {% endblock %}
