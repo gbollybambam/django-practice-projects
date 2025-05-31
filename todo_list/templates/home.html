@@ -6,27 +6,24 @@ Home
 {% endblock %}
 
 {% block main %}
-    <h1 class="text-3xl font-bold underline">
-        Hello world!
-    </h1>
+    <h1>Welcome to your To-Do List App</h1>
     
-    <h1 class="text-3xl font-bold text-blue-600">Welcome to My Site</h1>
     {% if user.is_authenticated %}
-    <h2 class="text-xl text-green-700">Welcome, {{ user.username }}</h2>
-    <p>you are currently logged in. </p>
-    <p><a href="{% url 'account_logout' %}" class="text-red-600 underline">Log Out</a></p>
-    {% else %}
-    <h2 class="text-xl text-red-700">You are not logged in</h2>
-    <p>Please log in or sign up to access all features.</p>
-    {% endif %}
+        <h2>Hello, {{ user.username }}. You are logged in.</h2>
 
-    <h2 class="mt-6 text-lg font-semibold">Options:</h2>
-    <ul class="list-disc ml-6">
-        {% if not user.is_authenticated %}
-        <li><a href="{% url 'account_signup' %}" class="text-blue-700 underline">Sign Up</a></li>
-        <li><a href="{% url 'account_login' %}" class="text-blue-700 underline">Log In</a></li>
-        {% endif %}
-        <li><a href="{% url 'account_reset_password' %}" class="text-blue-700 underline">Reset Password</a></li>
-    </ul>
+        <ul>
+            <li><a href="{% url 'task_list' %}">View My Tasks</a></li>
+            <li><a href="{% url 'task_create' %}">Create a New Task</a></li>
+            <li><a href="{% url 'account_logout' %}">Log Out</a></li>
+        </ul>
+    {% else %}
+        <h2>You are not logged in</h2>
+        <p>Please sign in or create an account to manage your tasks.</p>
+        <ul>
+            <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
+            <li><a href="{% url 'account_login' %}">Log In</a></li>
+            <li><a href="{% url 'account_reset_password' %}">Forgot Password?</a></li>
+        </ul>
+    {% endif %}
 </body>
 {% endblock %}
