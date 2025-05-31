@@ -6,7 +6,7 @@ Your Tasks
 {% block main %}
 <ul>
     {% for task in tasks %}
-    <li>{{ task.title }} - {{ task.description }} - {{ task.due_date }}</li>
+    <li>{{ task.title }} - {{ task.description }} - {{ task.due_date }} <a href="{{ task.get_absolute_url }}">view</a></li>
     {% empty %}
     <li>No tasks Yet.</li>
     {% endfor %}
