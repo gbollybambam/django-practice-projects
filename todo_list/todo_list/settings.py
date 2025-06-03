@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
     'accounts',
     'tasks',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

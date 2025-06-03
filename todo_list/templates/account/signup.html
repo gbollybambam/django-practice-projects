@@ -1,5 +1,6 @@
 {% extends "base_generic.html" %}
 {% load i18n %}
+{% load widget_tweaks %}
 {% load socialaccount %}
 
 {% block title %} Sign Up {% endblock %}
@@ -23,12 +24,28 @@
                         *
                         {% endif %}
                     </label>
-                        {{field}}
+                        <!-- {{field}}
                         {% if field.help_text %}
                             <p>{{ field.help_text }}</p>
                         {% endif %}
                         {% for  error in field.errors %}
                             <p>{{ error }}</p>
+                        {% endfor %} -->
+                        {% if field.name == "email" %}
+                            {% render_field form.email hx-get="/tasks/check-email/" hx-trigger="keyup changed delay:500ms" hx-target="#email-error"hx-swap="innerHTML" %}
+                        {% elif field.name == "username" %}
+                            {% render_field form.username hx-get="/tasks/check-username/" hx-trigger="keyup changed delay:500ms" hx-target="#username-error" hx-swap="innerHTML" %}
+                        {% else %}
+                        {{field }}
+                        {% endif %}
+
+                        <div id="{{ field.name }}-error" class="text-red-500 text-sm"></div>
+                        {% if field.help_text %}
+                        <p>{{ field.help_text }}</p>
+                        {% endif %}
+                        
+                        {% for error in field.errors %}
+                        <p style="color:red">{{ error }}</p>
                         {% endfor %}
                 </div>
             {% endfor %}

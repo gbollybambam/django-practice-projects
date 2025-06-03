@@ -19,14 +19,7 @@
     if you have not created account yet, then please <a href="{% url 'account_signup' %}">sign up</a> first
 </p>
 
-<form 
-id="login-form"
-method="post" 
-action="{% url 'account_login' %}"
-hx-post="{% url 'account_login' %}"
-hx-target="#login-form"
-hx-swap="outerHTML"
->
+<form >
     {% csrf_token %}
     {{ form.non_field_errors }}
 

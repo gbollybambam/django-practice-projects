@@ -5,7 +5,13 @@ from django.urls import reverse_lazy
 from .models import Task
 from .forms import TaskForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+from django.contrib.auth import get_user_model
+from django.http import HttpResponse
+from django.views.decorators.http import require_GET
 # Create your views here.
+
+User = get_user_model()
 
 class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
@@ -51,3 +57,18 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
     def get_queryset(self):
         return Task.objects.filter(user=self.request.user)
 
+
+
+@require_GET
+def check_username(request):
+    username = request.GET.get("username", "").strip()
+    if User.objects.filter(username=username).exists():
+        return HttpResponse("<p style='color:red'>Username already taken.</p>")
+    return HttpResponse("")
+
+@require_GET
+def check_email(request):
+    email = request.GET.get("email", "").strip()
+    if User.objects.filter(email=email).exists():
+        return HttpResponse("<p style='color:red'>Email already in use.</p>")
+    return HttpResponse("")
