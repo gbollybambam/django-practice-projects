@@ -1,0 +1,10 @@
+<form method="POST" hx-post="{% url 'task_toggle_complete' task.pk %}" hx-target="this" hx-swap="outerHTML">
+    {% csrf_token %}
+    <button type="submit">
+        {% if task.is_completed %}
+        ✅ Completed
+        {% else %}
+        ⏳ Not done
+        {% endif %}
+    </button>
+</form>

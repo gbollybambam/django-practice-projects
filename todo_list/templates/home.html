@@ -12,7 +12,11 @@ Home
         <h2>Hello, {{ user.username }}. You are logged in.</h2>
 
         <ul>
-            <li><a href="{% url 'task_list' %}">View My Tasks</a></li>
+            <li>
+                <a href="{% url 'task_list' %}">
+                    View My Tasks
+                </a>
+            </li>
             <li><a href="{% url 'task_create' %}">Create a New Task</a></li>
             <li><a href="{% url 'account_logout' %}">Log Out</a></li>
         </ul>
@@ -20,7 +24,12 @@ Home
         <h2>You are not logged in</h2>
         <p>Please sign in or create an account to manage your tasks.</p>
         <ul>
-            <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
+            <li>
+                <a href="{% url 'account_signup' %}"
+                >
+                    Sign Up
+                </a>
+            </li>
             <li><a href="{% url 'account_login' %}">Log In</a></li>
             <li><a href="{% url 'account_reset_password' %}">Forgot Password?</a></li>
         </ul>

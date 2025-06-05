@@ -1,13 +1,6 @@
-{% extends 'base_generic.html' %}
-
-{% block title %}Create Task{% endblock %}
-
-{% block main %}
-<h2>Create Task</h2>
 <form method="post" action="{% url 'task_create' %}">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Create Task</button>
 </form>
 <a href="{% url 'task_list' %}">cancel</a>
-{% endblock %}

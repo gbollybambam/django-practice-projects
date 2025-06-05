@@ -9,15 +9,15 @@
 <p>Description : {{ task.description|linebreaks }}</p>
 
 {% if task.due_date %}
-<p>Due Date: {{ task.due_date }}</p>
+<p>Due Date: {{ task.due_date|date:"F j, Y" }}</p>
 {% endif %}
 
 <p>Priority: {{ task.priority }}</p>
-<p>Completed: {{ task.is_completed|yesno:"Yes,No" }}</p>
-<p>Created At: {{ task.created_at }}</p>
+<p>Completed: {% if task.is_completed %}✅{% else %}❌{% endif %}</p>
+<p>Created At: {{ task.created_at|date:"F j, Y, g:i a" }}</p>
 
 <p>
-    <a href="{% url 'task_update' task.pk %}">Edit</a> |
+    <a href="{% url 'task_edit' task.pk %}">Edit</a> |
     <a href="{% url 'task_delete' task.pk %}">Delete</a> |
     <a href="{% url 'task_list' %}">Back to List</a>
 </p>

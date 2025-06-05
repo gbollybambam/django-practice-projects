@@ -3,13 +3,41 @@
 Your Tasks
 {% endblock %}
 
+{% block header %}
+{% if user.is_authenticated %}
+<p>Hello, {{ user.username }} | <a href="{% url 'account_logout' %}">Logout</a></p>
+{% endif %}
+{% endblock %}
+
 {% block main %}
 <ul>
     {% for task in tasks %}
-    <li>{{ task.title }} - {{ task.description }} - {{ task.due_date }} <a href="{{ task.get_absolute_url }}">view</a></li>
+    <li><a href="{{ task.get_absolute_url }}">{{ task.title }}</a>
+        <form  method="POST" hx-post="{% url 'task_toggle_complete' task.pk %}" hx-target="this" hx-swap="outerHTML">
+            {% csrf_token %}
+            <button type="submit" class="px-2 py-1 border rounded">
+                {% if task.is_completed %}
+                ✅ Completed
+                {% else %}
+                ⏳ Not done
+                {% endif %}
+            </button>
+        </form> - 
+        {{ task.description }} - {{ task.due_date }}      
+
+        <a href="{% url 'task_edit' task.pk %}">edit</a>
+        <a href="{% url 'task_delete' task.pk %}">delete</a></li>
     {% empty %}
     <li>No tasks Yet.</li>
     {% endfor %}
 </ul>
-<a href="{% url 'task_create' %}">create task</a>
+<div id="create-task-container">
+    <a href="{% url 'task_create' %}"
+       hx-get="{% url 'task_create' %}"
+       hx-target="#create-task-container"
+       hx-swap="innerHTML"
+    >
+    create task
+    </a>
+</div>
 {% endblock %}
