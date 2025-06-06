@@ -29,13 +29,33 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
             return ['tasks/partials/task_form_partial.html']
         return [self.template_name]
 
-class TaskListView(LoginRequiredMixin, ListView):
-    model = Task
-    context_object_name = 'tasks'
-    template_name = 'tasks/task_list.html'
+@login_required
+def task_list_view(request):
+    user = request.user
+    filter_by = request.GET.get("filter", "all")
 
-    def get_queryset(self):
-        return Task.objects.filter(user=self.request.user).order_by('-created_at')
+    if filter_by == "pending":
+        pending_tasks = Task.objects.filter(user=user, is_completed=False).order_by('-created_at')
+        completed_tasks = Task.objects.none()
+        template = 'tasks/partials/pending_tasks.html'
+    elif filter_by == "completed":
+        pending_tasks = Task.objects.none()
+        completed_tasks = Task.objects.filter(user=user, is_completed=True).order_by('-created_at')
+        template = 'tasks/partials/completed_tasks.html'
+    else:
+        pending_tasks = Task.objects.filter(user=user, is_completed=False).order_by('-created_at')
+        completed_tasks = Task.objects.filter(user=user, is_completed=True).order_by('-created_at')
+        template = 'tasks/task_list.html'
+
+    context = {
+        "pending_tasks": pending_tasks,
+        "completed_tasks": completed_tasks,
+        "active_filter": filter_by,
+    }
+
+    return render(request, template, context)
+
+
     
 class TaskDetailView(LoginRequiredMixin, DetailView):
     moodel = Task
@@ -83,4 +103,11 @@ def Toggle_task_completion(request, pk):
     task = get_object_or_404(Task, pk=pk, user=request.user)
     task.is_completed = not task.is_completed
     task.save()
-    return render(request, "tasks/partials/task_completion_toggle.html", {"task": task})
+
+    user = request.user
+
+    pending_tasks = Task.objects.filter(user=user, is_completed=False).order_by('-created_at')
+    completed_tasks = Task.objects.filter(user=user, is_completed=True).order_by('-created_at')
+
+
+    return render(request, "tasks/partials/task_lists_partial.html", {'pending_tasks': pending_tasks, 'completed_tasks': completed_tasks}) 

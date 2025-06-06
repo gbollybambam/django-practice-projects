@@ -1,0 +1,27 @@
+{% extends 'base_generic.html' %}
+
+{% block header %}
+<div id="filters">
+    <strong>Filter:</strong>
+    <a href="?filter=all" {% if active_filter == 'all' %}{% endif %}>All</a> |
+    <a href="?filter=pending" {% if active_filter == 'pending' %}{% endif %}>Pending</a> |
+    <a href="?filter=completed" {% if active_filter == 'completed' %}{% endif %}>Completed</a>
+</div>
+{% endblock %}
+
+{% block main %}
+<h2>⏳ Pending Tasks</h2>
+<ul>
+    {% for task in pending_tasks %}
+    <li>
+        <a href="{{ task.get_absolute_url }}">{{ task.title }}</a> -
+        {{ task.description }} - {{ task.due_date }}
+
+        <a href="{% url 'task_edit' task.pk %}">edit</a>
+        <a href="{% url 'task_delete' task.pk %}">delete</a>
+    </li>
+    {% empty %}
+    <li>No pending tasks</li>
+    {% endfor %}
+</ul>
+{% endblock %}

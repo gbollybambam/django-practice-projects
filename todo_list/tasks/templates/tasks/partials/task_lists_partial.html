@@ -1,0 +1,31 @@
+<h2>⏳ Pending Tasks</h2>
+<ul>
+    {% for task in pending_tasks %}
+    <li>
+        <a href="{{ task.get_absolute_url }}">{{ task.title }}</a>
+        {% include "tasks/partials/task_completion_toggle.html" with task=task %} -
+        {{ task.description }} - {{ task.due_date }}
+
+        <a href="{% url 'task_edit' task.pk %}">edit</a>
+        <a href="{% url 'task_delete' task.pk %}">delete</a>
+    </li>
+    {% empty %}
+    <li>No pending tasks</li>
+    {% endfor %}
+</ul>
+
+<h2>✅ Completed Tasks</h2>
+<ul>
+    {% for task in completed_tasks %}
+    <li>
+        <a href="{{ task.get_absolute_url }}">{{ task.title }}</a>
+        {% include "tasks/partials/task_completion_toggle.html" with task=task %} -
+        {{ task.description }} - {{ task.due_date }}
+        <a href="{% url 'task_edit' task.pk %}">edit</a>
+        <a href="{% url 'task_delete' task.pk %}">delete</a>
+    </li>
+    {% empty %}
+    <li>No completed tasks.</li>
+    {% endfor %}
+</ul>
+

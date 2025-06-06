@@ -8,21 +8,22 @@
         <link rel="stylesheet" href="{% static 'src/output.css' %}">
         <script src="https://unpkg.com/htmx.org@1.9.3"></script>
     </head>
-    <body>
-        <header>
-
+    <body class="bg-[#fff6f5] font-sans leading-relaxed tracking-tight">
+        <header class="w-full border-b border-[#f3d1cf] py-6 px-4">
             {% block header %}
             {% endblock %}
         </header>
 
-        <main id="main-content">
+        <main id="main-content" class="max-w-4x1 mx-auto px-4 py-16">
             {% block main %}
             {% endblock %}
         </main>
 
-        <footer>
+        <footer class="border-t border-t border-[#f3d1cf] text-center text-sm text-[#a8a8aa] py-8 px-4">
             {% block footer %}
+            &copy; {{ now.year }} TodoList. All rights reserved.
             {% endblock %}
         </footer>
     </body>
 </html>
+

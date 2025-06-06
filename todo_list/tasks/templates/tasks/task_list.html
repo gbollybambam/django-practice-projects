@@ -6,31 +6,20 @@ Your Tasks
 {% block header %}
 {% if user.is_authenticated %}
 <p>Hello, {{ user.username }} | <a href="{% url 'account_logout' %}">Logout</a></p>
+<div id="filters">
+    <strong>Filter:</strong>
+    <a href="?filter=all" {% if active_filter == 'all' %}{% endif %}>All</a> |
+    <a href="?filter=pending" {% if active_filter == 'pending' %}{% endif %}>Pending</a> |
+    <a href="?filter=completed" {% if active_filter == 'completed' %}{% endif %}>Completed</a>
+</div>
 {% endif %}
 {% endblock %}
 
 {% block main %}
-<ul>
-    {% for task in tasks %}
-    <li><a href="{{ task.get_absolute_url }}">{{ task.title }}</a>
-        <form  method="POST" hx-post="{% url 'task_toggle_complete' task.pk %}" hx-target="this" hx-swap="outerHTML">
-            {% csrf_token %}
-            <button type="submit" class="px-2 py-1 border rounded">
-                {% if task.is_completed %}
-                ✅ Completed
-                {% else %}
-                ⏳ Not done
-                {% endif %}
-            </button>
-        </form> - 
-        {{ task.description }} - {{ task.due_date }}      
+<div id="task-lists">
+    {% include 'tasks/partials/task_lists_partial.html' %}
+</div>
 
-        <a href="{% url 'task_edit' task.pk %}">edit</a>
-        <a href="{% url 'task_delete' task.pk %}">delete</a></li>
-    {% empty %}
-    <li>No tasks Yet.</li>
-    {% endfor %}
-</ul>
 <div id="create-task-container">
     <a href="{% url 'task_create' %}"
        hx-get="{% url 'task_create' %}"
@@ -40,4 +29,38 @@ Your Tasks
     create task
     </a>
 </div>
+
 {% endblock %}
+{% load static %}
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}TODO_LIST{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="{% static 'src/output.css' %}" />
+    <script src="https://unpkg.com/htmx.org@1.9.3"></script>
+</head>
+
+<body class="bg-[#fff6f5] text-[#1d1d1f] font-sans leading-relaxed tracking-tight">
+
+    <header class="w-full border-b border-[#f3d1cf] py-6 px-4">
+        {% block header %}
+        {% endblock %}
+    </header>
+
+    <main id="main-content" class="max-w-4xl mx-auto px-4 py-16">
+        {% block main %}
+        {% endblock %}
+    </main>
+
+    <footer class="border-t border-[#f3d1cf] text-center text-sm text-[#a8a8aa] py-8 px-4">
+        {% block footer %}
+        &copy; {{ now.year }} TodoList. All rights reserved.
+        {% endblock %}
+    </footer>
+
+</body> -->
+
+<!-- </html> -->

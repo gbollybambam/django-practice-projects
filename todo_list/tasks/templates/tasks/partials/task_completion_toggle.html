@@ -1,4 +1,4 @@
-<form method="POST" hx-post="{% url 'task_toggle_complete' task.pk %}" hx-target="this" hx-swap="outerHTML">
+<form method="POST" hx-post="{% url 'task_toggle_complete' task.pk %}" hx-target="#task-lists" hx-swap="innerHTML">
     {% csrf_token %}
     <button type="submit">
         {% if task.is_completed %}
