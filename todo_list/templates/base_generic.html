@@ -8,22 +8,30 @@
         <link rel="stylesheet" href="{% static 'src/output.css' %}">
         <script src="https://unpkg.com/htmx.org@1.9.3"></script>
     </head>
-    <body class="bg-[#fff6f5] font-sans leading-relaxed tracking-tight">
-        <header class="w-full border-b border-[#f3d1cf] py-6 px-4">
-            {% block header %}
-            {% endblock %}
-        </header>
-
-        <main id="main-content" class="max-w-4x1 mx-auto px-4 py-16">
-            {% block main %}
-            {% endblock %}
-        </main>
-
-        <footer class="border-t border-t border-[#f3d1cf] text-center text-sm text-[#a8a8aa] py-8 px-4">
-            {% block footer %}
-            &copy; {{ now.year }} TodoList. All rights reserved.
-            {% endblock %}
-        </footer>
+    <body class="bg-[#fceae6] leading-none text-[#df3100]">
+        <div class="max-w-[120rem] px-[1.6rem] py-[1.6rem] mx-auto ">
+            <header class="">
+                <nav class="flex justify-end">
+                    <ul class="flex gap-[4rem] items-center text-sm uppercase font-medium tracking-wide">
+                        {% block nav %}
+    
+                        {% endblock %}
+                    </ul>
+                </nav>
+                {% block header %}
+                {% endblock %}
+            </header>
+            <main id="main-content" class="">
+                {% block main %}
+                {% endblock %}
+            </main>
+    
+            <footer class="">
+                {% block footer %}
+                <p class="">&copy; {{ now.year }} TodoList. All rights reserved.</p>
+                {% endblock %}
+            </footer>
+        </div>
     </body>
 </html>
 

@@ -5,9 +5,31 @@
 Home
 {% endblock %}
 
+{% block header %}
+<h1>Welcome to your To-Do List App</h1>
+{% endblock %}
+
+{% block nav %}
+    {% if not user.is_authenticated %}
+        <li>
+            <a href="{% url 'account_signup' %}">
+                Sign Up
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'account_login' %}">
+                Log In
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'account_reset_password' %}">
+                Forgot Password?
+            </a>
+        </li>
+    {% endif %}
+{% endblock %}
+
 {% block main %}
-    <h1>Welcome to your To-Do List App</h1>
-    
     {% if user.is_authenticated %}
         <h2>Hello, {{ user.username }}. You are logged in.</h2>
 
@@ -23,16 +45,6 @@ Home
     {% else %}
         <h2>You are not logged in</h2>
         <p>Please sign in or create an account to manage your tasks.</p>
-        <ul>
-            <li>
-                <a href="{% url 'account_signup' %}"
-                >
-                    Sign Up
-                </a>
-            </li>
-            <li><a href="{% url 'account_login' %}">Log In</a></li>
-            <li><a href="{% url 'account_reset_password' %}">Forgot Password?</a></li>
-        </ul>
     {% endif %}
 </body>
 {% endblock %}
