@@ -8,27 +8,30 @@
         <link rel="stylesheet" href="{% static 'src/output.css' %}">
         <script src="https://unpkg.com/htmx.org@1.9.3"></script>
     </head>
-    <body class="bg-[#fceae6] leading-none text-[#df3100]">
+    <body class="bg-[#f9fafb] leading-none text-[#111827]">
         <div class="max-w-[120rem] px-[1.6rem] py-[1.6rem] mx-auto ">
             <header class="">
+                {% block outerNav %}
                 <nav class="flex justify-end">
-                    <ul class="flex gap-[4rem] items-center text-sm uppercase font-medium tracking-wide">
+                    <ul class="flex gap-[4rem] items-center text-sm uppercase  tracking-wide mb-[1.6rem] font-bold">
                         {% block nav %}
-    
                         {% endblock %}
                     </ul>
                 </nav>
-                {% block header %}
                 {% endblock %}
+                <div>
+                    {% block header %}
+                    {% endblock %}
+                </div>
             </header>
-            <main id="main-content" class="">
+            <main id="main-content">
                 {% block main %}
                 {% endblock %}
             </main>
     
-            <footer class="">
+            <footer>
                 {% block footer %}
-                <p class="">&copy; {{ now.year }} TodoList. All rights reserved.</p>
+                <p class="text-[0.625rem] tracking-widest uppercase font-bold mt-[4.4rem]">&copy; {{ now.year }} TodoList. All rights reserved.</p>
                 {% endblock %}
             </footer>
         </div>

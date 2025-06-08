@@ -1,63 +1,72 @@
 {% extends "base_generic.html" %}
 {% load i18n %}
 {% load socialaccount %}
+{% load widget_tweaks %}
 
 {% block title %}Sign In{% endblock %}
 
+{% block header %}
+<h2 class="font-black text-[3.6rem] mb-[2.4rem]">Sign In</h2>
+{% endblock %}
+
+{% block outerNav %}
+{% endblock %}
+
 {% block main %}
-<h2>Sign In</h2>
-
-{% if messages %}
-<ul>
-    {% for message in messages %}
-    <li>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-
-<p>
-    if you have not created account yet, then please <a href="{% url 'account_signup' %}">sign up</a> first
-</p>
-
-<form method="post" action="{% url 'account_login' %}">
-    {% csrf_token %}
-    {{ form.non_field_errors }}
-
-    {% for field in form %}
-        <div>
-            <label for="{{ field.id_for_label }}">
-                {{ field.label }}
-                {% if field.field.required %}
-                *
+<div class="uppercase text-sm font-semibold md:text-base tracking-wide space-y-[0.075rem] border-t border-[#e5e7eb] pt-[1.6rem]">
+    
+    {% if messages %}
+    <ul class="text-red-600 space-y-[0.4rem]">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+    <p class="text-[#374151] mb-[1.6rem]">
+        if you have not created account yet, then please <a href="{% url 'account_signup' %}" class="underline hover:text-[#111827] transition-all duration-150 font-bold">sign up</a> first
+    </p>
+    
+    <form method="post" action="{% url 'account_login' %}" class="space-y-[1.6rem]">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+    
+        {% for field in form %}
+            <div class="space-y-[0.4rem]">
+                <label for="{{ field.id_for_label }}" class="block text-[#111827]">
+                    {{ field.label }}
+                    {% if field.field.required %}
+                    <span class="text-500">*</span>
+                    {% endif %}
+                </label>
+                {{ field|add_class:"w-full px-[1.2rem] py-[0.8rem] border border-[#d1d5db] rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-[#111827]" }}
+                {% if field.help_text %}
+                    <p class="text-xs text-[#6b7280]">{{ field.help_text }}</p>
                 {% endif %}
+                {% for error in field.errors %}
+                    <p class="text-xs text-red-500">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    
+        <div>
+            <label>
+                <!-- {{ form.remember }} Remember Me -->
             </label>
-            {{ field }}
-            {% if field.help_text %}
-                <p>{{ field.help_text }}</p>
-            {% endif %}
-            {% for error in field.errors %}
-                <p>{{ error }}</p>
-            {% endfor %}
         </div>
-    {% endfor %}
-
+    
+        <button type="submit" class="bg-[#111827] text-white text-sm uppercase tracking-wider px-[2rem] py-[0.8rem] font-bold rounded-xl hover:bg-[#374151] transition">Sign In</button>
+    </form>
+    
+    <p><a href="{% url 'account_reset_password' %}" class="text-[#374151] underline hover:text-[#111827] font-semibold transition-all duration-150 ">Forgot your password</a></p>
+    
+    {% get_providers as socialaccount_providers %}
+    {% if socialaccount_providers %}
     <div>
-        <label>
-            <!-- {{ form.remember }} Remember Me -->
-        </label>
+        <p>Or use a third-party</p>
+        {% include "socialaccount/snippets/provider_list.html" with process="login" %}
     </div>
-
-    <button type="submit">Sign In</button>
-</form>
-
-<p><a href="{% url 'account_reset_password' %}">Forgot your password</a></p>
-
-{% get_providers as socialaccount_providers %}
-{% if socialaccount_providers %}
-<div>
-    <p>Or use a third-party</p>
-    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+    {% endif %}
 </div>
-{% endif %}
 
 {% endblock %}

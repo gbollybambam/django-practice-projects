@@ -6,23 +6,23 @@ Home
 {% endblock %}
 
 {% block header %}
-<h1>Welcome to your To-Do List App</h1>
+<h1 class="font-black text-[7.4rem] mt-[1.6rem] mb-[3.2rem]">Welcome to your To-Do List App</h1>
 {% endblock %}
 
 {% block nav %}
     {% if not user.is_authenticated %}
         <li>
-            <a href="{% url 'account_signup' %}">
+            <a class="text-[#374151] hover:underline hover:text-[#111827] transition-all duration-150" href="{% url 'account_signup' %}">
                 Sign Up
             </a>
         </li>
         <li>
-            <a href="{% url 'account_login' %}">
+            <a class="text-[#374151] hover:underline hover:text-[#111827] transition-all duration-150" href="{% url 'account_login' %}">
                 Log In
             </a>
         </li>
         <li>
-            <a href="{% url 'account_reset_password' %}">
+            <a class="text-[#374151] hover:underline hover:text-[#111827] transition-all duration-150" href="{% url 'account_reset_password' %}">
                 Forgot Password?
             </a>
         </li>
@@ -30,6 +30,7 @@ Home
 {% endblock %}
 
 {% block main %}
+<div class="uppercase text-sm font-semibold md:text-base tracking-wide space-y-[0.075rem] border-t border-[#e5e7eb]">
     {% if user.is_authenticated %}
         <h2>Hello, {{ user.username }}. You are logged in.</h2>
 
@@ -43,8 +44,8 @@ Home
             <li><a href="{% url 'account_logout' %}">Log Out</a></li>
         </ul>
     {% else %}
-        <h2>You are not logged in</h2>
-        <p>Please sign in or create an account to manage your tasks.</p>
+        <h2 class="mb-0 pb-0 pt-1 border-b border-[#e5e7eb]">You are not logged in</h2>
+        <p class="pt-1 border-b border-[#e5e7eb]">Please sign in or create an account to manage your tasks.</p>
     {% endif %}
-</body>
+</div>
 {% endblock %}
